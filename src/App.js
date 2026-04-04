@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Error from "./pages/Error";
 import Reserve from "./pages/Reserve";
+import Footer from "./pages/Footer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/reserve" element={<Reserve />} />
         <Route path="*" element={<Error />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
