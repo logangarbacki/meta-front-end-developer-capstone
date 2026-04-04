@@ -1,5 +1,8 @@
 import { fetchAPI } from "../api/api";
 
+export const validateName = (name) => name.length >= 2;
+export const validateEmail = (email) => email.includes("@");
+
 export const initializeTimes = () => {
   return fetchAPI(new Date()).map((time) => {
     const [h, m] = time.split(":");

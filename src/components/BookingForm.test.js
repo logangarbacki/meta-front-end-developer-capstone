@@ -77,3 +77,24 @@ describe("BookingForm", () => {
     });
   });
 });
+
+test("form inputs have correct HTML5 validation attributes", () => {
+  const times = initializeTimes();
+
+  render(<BookingForm availableTimes={times} onSubmit={() => {}} />);
+
+  const nameInput = screen.getByLabelText(/name/i);
+  const emailInput = screen.getByLabelText(/email/i);
+  const guestsInput = screen.getByLabelText(/guests/i);
+  const dateInput = screen.getByLabelText(/date/i);
+
+  expect(nameInput).toBeRequired();
+  expect(emailInput).toBeRequired();
+  expect(guestsInput).toBeRequired();
+  expect(dateInput).toBeRequired();
+
+  expect(emailInput).toHaveAttribute("type", "email");
+
+  expect(guestsInput).toHaveAttribute("min", "1");
+  expect(guestsInput).toHaveAttribute("max", "10");
+});
