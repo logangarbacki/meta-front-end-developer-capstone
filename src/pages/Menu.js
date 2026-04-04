@@ -48,7 +48,7 @@ const menuItems = [
 
 function Menu() {
   return (
-    <main className="menu">
+    <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
       {menuItems.map((section) => (
         <section key={section.category} className="menu-section">

@@ -19,9 +19,9 @@ function Reserve() {
 
   if (submitted && formData) {
     return (
-      <main className="reserve">
+      <main className="reserve" aria-label="Reservation confirmation page">
         <div className="reserve-success">
-          <h2>Reservation Confirmed!</h2>
+          <h2 aria-live="polite">Reservation Confirmed!</h2>
           <p>
             Thank you, <strong>{formData.name}</strong>! We've reserved a table for{" "}
             <strong>{formData.guests}</strong> guest{formData.guests > 1 ? "s" : ""} on{" "}

@@ -31,11 +31,11 @@ const specials = [
 function Home() {
   return (
     <>
-    <main className="home">
-      <section className="specials">
+    <main className="home" aria-label="Homepage showcasing specials">
+      <section className="specials" aria-labelledby="specials-heading">
         <div className="specials-header">
           <h2>This Week's Specials</h2>
-          <button className="online-menu-btn">Online Menu</button>
+          <button aria-label="View online menu" className="online-menu-btn">Online Menu</button>
         </div>
         <div className="specials-grid">
           {specials.map((item) => (
