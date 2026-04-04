@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import BookingForm from "./BookingForm";
-import { initializeTimes, updateTimes } from "../utils/bookingUtils";
-import * as api from "../api/api";
+import { initializeTimes, updateTimes } from "../utils/bookingUtils.js";
+import * as api from "../api/api.js";
 
 describe("BookingForm", () => {
   beforeEach(() => {

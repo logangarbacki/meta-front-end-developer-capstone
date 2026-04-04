@@ -1,7 +1,6 @@
 import greekSalad from "../assets/greek salad.jpg";
 import bruchetta from "../assets/bruchetta.svg";
 import lemonDessert from "../assets/lemon dessert.jpg";
-import Hero from "../components/Hero";
 import "./Home.css";
 
 const specials = [

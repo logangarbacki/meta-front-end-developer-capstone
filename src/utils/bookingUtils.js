@@ -1,7 +1,4 @@
-import { fetchAPI } from "../api/api";
-
-export const validateName = (name) => name.length >= 2;
-export const validateEmail = (email) => email.includes("@");
+import { fetchAPI } from "../api/api.js";
 
 export const initializeTimes = () => {
   return fetchAPI(new Date()).map((time) => {
