@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Error from "./pages/Error";
+import Reserve from "./pages/Reserve";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/Reserve" element={<Reserve />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,119 @@
+.reserve {
+  padding: 48px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+.reserve h2 {
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 32px;
+}
+
+
+.reserve-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+.form-group input,
+.form-group select {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #495e57;
+}
+
+
+.reserve-btn {
+  background-color: #f4ce14;
+  color: #333;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+
+.reserve-btn:hover {
+  background-color: #e0b800;
+}
+
+
+.reserve-success {
+  text-align: center;
+  padding: 48px 0;
+}
+
+
+.reserve-success h2 {
+  font-size: 36px;
+  color: #495e57;
+  margin-bottom: 16px;
+}
+
+
+.reserve-success p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+
+.reserve-success .reserve-btn {
+  margin: 24px auto 0;
+}
+
+
+@media (max-width: 768px) {
+  .reserve {
+    padding: 32px 24px;
+  }
+
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
