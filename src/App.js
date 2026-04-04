@@ -1,10 +1,24 @@
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Menu from "./pages/Menu";
+import Error from "./pages/Error";
 
 function App() {
   return (
-    <div className="App">
-      Meta Front-End Developer Capstone project
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Hero />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

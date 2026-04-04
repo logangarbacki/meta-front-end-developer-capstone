@@ -1,0 +1,39 @@
+.hero {
+  background-color: #495e57;
+  padding: 64px 80px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  color: #f4ce14;
+  margin: 0 0 8px 0;
+}
+
+.hero-text h2 {
+  font-size: 32px;
+  color: #fff;
+  margin: 0 0 16px 0;
+}
+
+.hero-text p {
+  font-size: 16px;
+  color: #edefee;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-text button {
+  background-color: #f4ce14;
+  color: #333;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hero-text button:hover {
+  background-color: #e0b800;
+}
