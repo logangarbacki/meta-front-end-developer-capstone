@@ -1,6 +1,14 @@
 import { useState } from "react";
 
-const BookingForm = ({ availableTimes, onSubmit }) => {
+const BookingForm = ({
+  availableTimes,
+  timesLoading,
+  timesError,
+  onDateChange,
+  onSubmit,
+  submitting,
+  submitError,
+}) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -11,7 +19,11 @@ const BookingForm = ({ availableTimes, onSubmit }) => {
   });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    if (name === "date" && onDateChange) {
+      onDateChange(value);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -64,12 +76,24 @@ const BookingForm = ({ availableTimes, onSubmit }) => {
           </div>
           <div className="form-group">
             <label htmlFor="time">Time</label>
-            <select id="time" name="time" value={form.time} onChange={handleChange} required>
-              <option value="">Select a time</option>
-              {availableTimes.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+            {timesLoading ? (
+              <p role="status" aria-live="polite" style={{ margin: 0, fontSize: "14px", color: "#777" }}>
+                Loading available times…
+              </p>
+            ) : timesError ? (
+              <p role="alert" style={{ margin: 0, fontSize: "14px", color: "#c0392b" }}>
+                {timesError}
+              </p>
+            ) : (
+              <select id="time" name="time" value={form.time} onChange={handleChange} required>
+                <option value="">Select a time</option>
+                {availableTimes.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
 
@@ -89,7 +113,12 @@ const BookingForm = ({ availableTimes, onSubmit }) => {
           </div>
           <div className="form-group">
             <label htmlFor="occasion">Occasion (optional)</label>
-            <select id="occasion" name="occasion" value={form.occasion} onChange={handleChange}>
+            <select
+              id="occasion"
+              name="occasion"
+              value={form.occasion}
+              onChange={handleChange}
+            >
               <option value="">None</option>
               <option value="Birthday">Birthday</option>
               <option value="Anniversary">Anniversary</option>
@@ -99,8 +128,14 @@ const BookingForm = ({ availableTimes, onSubmit }) => {
           </div>
         </div>
 
-        <button type="submit" className="reserve-btn">
-          Reserve Table
+        {submitError && (
+          <p role="alert" style={{ color: "#c0392b", fontSize: "14px", margin: 0 }}>
+            {submitError}
+          </p>
+        )}
+
+        <button type="submit" className="reserve-btn" disabled={submitting}>
+          {submitting ? "Reserving…" : "Reserve Table"}
         </button>
       </form>
     </section>

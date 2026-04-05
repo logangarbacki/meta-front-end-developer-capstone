@@ -1,74 +1,95 @@
-import greekSalad from "../assets/greek salad.jpg";
-import bruchetta from "../assets/bruchetta.svg";
-import lemonDessert from "../assets/lemon dessert.jpg";
-import restaurantFood from "../assets/restauranfood.jpg";
+import { useMenu } from "../hooks/useMenu";
+import { CATEGORIES } from "../api/mockData";
 import "./Menu.css";
 
-const menuItems = [
-  {
-    category: "Starters",
-    items: [
-      {
-        name: "Greek Salad",
-        price: "$12.99",
-        description: "Crispy lettuce, peppers, olives and Chicago style feta cheese with garlic and rosemary croutons.",
-        image: greekSalad,
-      },
-      {
-        name: "Bruschetta",
-        price: "$5.99",
-        description: "Grilled bread smeared with garlic and seasoned with salt, olive oil, and fresh tomatoes.",
-        image: bruchetta,
-      },
-    ],
-  },
-  {
-    category: "Mains",
-    items: [
-      {
-        name: "Grilled Fish",
-        price: "$20.00",
-        description: "Fresh Mediterranean sea bass, grilled to perfection with lemon butter and seasonal vegetables.",
-        image: restaurantFood,
-      },
-    ],
-  },
-  {
-    category: "Desserts",
-    items: [
-      {
-        name: "Lemon Dessert",
-        price: "$5.00",
-        description: "Grandma's authentic lemon cake recipe, made with locally sourced ingredients.",
-        image: lemonDessert,
-      },
-    ],
-  },
-];
-
 function Menu() {
+  const {
+    items,
+    loading,
+    error,
+    category,
+    setCategory,
+    sortBy,
+    setSortBy,
+    search,
+    setSearch,
+  } = useMenu();
+
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
-      {menuItems.map((section) => (
-        <section key={section.category} className="menu-section">
-          <h3>{section.category}</h3>
-          <div className="menu-grid">
-            {section.items.map((item) => (
-              <div className="menu-card" key={item.name}>
-                <img src={item.image} alt={item.name} />
-                <div className="menu-card-body">
-                  <div className="menu-card-title">
-                    <span>{item.name}</span>
-                    <span className="menu-price">{item.price}</span>
-                  </div>
-                  <p>{item.description}</p>
+
+      <div className="menu-controls">
+        <input
+          className="menu-search"
+          type="search"
+          placeholder="Search menu..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label="Search menu items"
+        />
+
+        <div className="menu-filters" role="group" aria-label="Filter by category">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`filter-btn${category === cat ? " active" : ""}`}
+              onClick={() => setCategory(cat)}
+              aria-pressed={category === cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <select
+          className="menu-sort"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          aria-label="Sort menu items"
+        >
+          <option value="default">Sort: Default</option>
+          <option value="name">Sort: Name A–Z</option>
+          <option value="price-asc">Sort: Price Low–High</option>
+          <option value="price-desc">Sort: Price High–Low</option>
+        </select>
+      </div>
+
+      {loading && (
+        <p className="menu-status" role="status" aria-live="polite">
+          Loading menu…
+        </p>
+      )}
+
+      {error && (
+        <p className="menu-status menu-error" role="alert">
+          {error}
+        </p>
+      )}
+
+      {!loading && !error && items.length === 0 && (
+        <p className="menu-status" role="status">
+          No items match your search.
+        </p>
+      )}
+
+      {!loading && !error && items.length > 0 && (
+        <div className="menu-grid">
+          {items.map((item) => (
+            <div className="menu-card" key={item.id}>
+              <img src={item.image} alt={item.name} />
+              <div className="menu-card-body">
+                <div className="menu-card-title">
+                  <span>{item.name}</span>
+                  <span className="menu-price">${item.price.toFixed(2)}</span>
                 </div>
+                <span className="menu-card-category">{item.category}</span>
+                <p>{item.description}</p>
               </div>
-            ))}
-          </div>
-        </section>
-      ))}
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }

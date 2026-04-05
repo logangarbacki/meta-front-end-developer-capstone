@@ -62,8 +62,111 @@
   line-height: 1.6;
 }
 
+/* ── Controls bar ── */
+.menu-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.menu-search {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  flex: 1 1 200px;
+  min-width: 160px;
+  transition: border-color 0.2s;
+}
+
+.menu-search:focus {
+  outline: none;
+  border-color: #495e57;
+}
+
+.menu-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.filter-btn:hover {
+  border-color: #495e57;
+  color: #495e57;
+}
+
+.filter-btn.active {
+  background: #495e57;
+  border-color: #495e57;
+  color: #fff;
+}
+
+.menu-sort {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.menu-sort:focus {
+  outline: none;
+  border-color: #495e57;
+}
+
+/* ── Status / error messages ── */
+.menu-status {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+}
+
+.menu-error {
+  color: #c0392b;
+}
+
+/* ── Category badge on card ── */
+.menu-card-category {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #495e57;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+
 @media (max-width: 768px) {
   .menu {
     padding: 32px 24px;
+  }
+
+  .menu-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .menu-sort {
+    width: 100%;
   }
 }
