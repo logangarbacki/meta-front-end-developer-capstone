@@ -6,13 +6,6 @@ import restaurantFood from "../assets/restauranfood.jpg";
 import { fetchMenuItems } from "../api/api";
 import "./Menu.css";
 
-const fallbackItems = [
-  { id: 1, title: "Greek Salad", price: "12.99", inventory: 50 },
-  { id: 2, title: "Bruschetta", price: "5.99", inventory: 30 },
-  { id: 3, title: "Grilled Fish", price: "20.00", inventory: 20 },
-  { id: 4, title: "Lemon Dessert", price: "5.00", inventory: 40 },
-];
-
 const itemImages = {
   "Greek Salad": greekSalad,
   "Bruschetta": bruchetta,
@@ -23,37 +16,58 @@ function getImage(title) {
   return itemImages[title] || restaurantFood;
 }
 
+function groupByCategory(items) {
+  return items.reduce((acc, item) => {
+    const cat = item.category || "Other";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(item);
+    return acc;
+  }, {});
+}
+
+const CATEGORY_ORDER = ["Starters", "Mains", "Desserts", "Drinks", "Other"];
+
 function Menu() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetchMenuItems()
       .then((data) => setItems(data))
-      .catch(() => setItems(fallbackItems))
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
+
+  const grouped = groupByCategory(items);
+  const categories = CATEGORY_ORDER.filter((c) => grouped[c]);
 
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
-      {loading ? (
-        <p>Loading menu...</p>
-      ) : (
-        <div className="menu-grid">
-          {items.map((item) => (
-            <div className="menu-card" key={item.id}>
-              <img src={getImage(item.title)} alt={item.title} />
-              <div className="menu-card-body">
-                <div className="menu-card-title">
-                  <span>{item.title}</span>
-                  <span className="menu-price">${item.price}</span>
+      {loading && <p>Loading menu...</p>}
+      {error && <p className="menu-empty">Menu unavailable right now — check back soon.</p>}
+      {!loading && !error && items.length === 0 && (
+        <p className="menu-empty">No menu items available yet.</p>
+      )}
+      {!loading && !error && categories.map((category) => (
+        <section key={category} className="menu-section">
+          <h3>{category}</h3>
+          <div className="menu-grid">
+            {grouped[category].map((item) => (
+              <div className="menu-card" key={item.id}>
+                <img src={getImage(item.title)} alt={item.title} />
+                <div className="menu-card-body">
+                  <div className="menu-card-title">
+                    <span>{item.title}</span>
+                    <span className="menu-price">${item.price}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        </section>
+      ))}
     </main>
   );
 }
