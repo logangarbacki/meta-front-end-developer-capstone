@@ -1,20 +1,36 @@
 import { useState, useReducer } from "react";
+import { Navigate } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
 import { initializeTimes, updateTimes } from "../utils/bookingUtils";
+import { submitAPI } from "../api/api";
+import { useAuth } from "../context/AuthContext";
 import "./Reserve.css";
 
 function Reserve() {
+  const { isLoggedIn } = useAuth();
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  if (!isLoggedIn) return <Navigate to="/login" replace />;
 
   const handleDateChange = (date) => {
     dispatch({ type: "UPDATE_DATE", payload: date });
   };
 
-  const handleSubmit = (form) => {
-    setFormData(form);
-    setSubmitted(true);
+  const handleSubmit = async (form) => {
+    setSubmitting(true);
+    setError(null);
+    const success = await submitAPI(form);
+    setSubmitting(false);
+    if (success) {
+      setFormData(form);
+      setSubmitted(true);
+    } else {
+      setError("Booking failed. Please try again.");
+    }
   };
 
   if (submitted && formData) {
@@ -38,10 +54,12 @@ function Reserve() {
 
   return (
     <main className="reserve">
+      {error && <p className="reserve-error" role="alert">{error}</p>}
       <BookingForm
         availableTimes={availableTimes}
         onDateChange={handleDateChange}
         onSubmit={handleSubmit}
+        submitting={submitting}
       />
     </main>
   );

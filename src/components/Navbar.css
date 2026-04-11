@@ -30,3 +30,39 @@
 .navbar-links a:hover {
   color: #495e57;
 }
+
+.navbar-login {
+  background-color: #f4ce14;
+  color: #333 !important;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 700 !important;
+}
+
+.navbar-login:hover {
+  background-color: #e0b800;
+  color: #333 !important;
+}
+
+.navbar-username {
+  font-size: 15px;
+  color: #495e57;
+  font-weight: 600;
+}
+
+.navbar-logout {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navbar-logout:hover {
+  border-color: #495e57;
+  color: #495e57;
+}

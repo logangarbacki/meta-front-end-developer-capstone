@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BookingForm = ({ availableTimes, onSubmit }) => {
+const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -99,8 +99,8 @@ const BookingForm = ({ availableTimes, onSubmit }) => {
           </div>
         </div>
 
-        <button type="submit" className="reserve-btn">
-          Reserve Table
+        <button type="submit" className="reserve-btn" disabled={submitting}>
+          {submitting ? "Reserving..." : "Reserve Table"}
         </button>
       </form>
     </section>

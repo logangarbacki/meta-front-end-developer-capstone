@@ -1,74 +1,59 @@
+import { useState, useEffect } from "react";
 import greekSalad from "../assets/greek salad.jpg";
 import bruchetta from "../assets/bruchetta.svg";
 import lemonDessert from "../assets/lemon dessert.jpg";
 import restaurantFood from "../assets/restauranfood.jpg";
+import { fetchMenuItems } from "../api/api";
 import "./Menu.css";
 
-const menuItems = [
-  {
-    category: "Starters",
-    items: [
-      {
-        name: "Greek Salad",
-        price: "$12.99",
-        description: "Crispy lettuce, peppers, olives and Chicago style feta cheese with garlic and rosemary croutons.",
-        image: greekSalad,
-      },
-      {
-        name: "Bruschetta",
-        price: "$5.99",
-        description: "Grilled bread smeared with garlic and seasoned with salt, olive oil, and fresh tomatoes.",
-        image: bruchetta,
-      },
-    ],
-  },
-  {
-    category: "Mains",
-    items: [
-      {
-        name: "Grilled Fish",
-        price: "$20.00",
-        description: "Fresh Mediterranean sea bass, grilled to perfection with lemon butter and seasonal vegetables.",
-        image: restaurantFood,
-      },
-    ],
-  },
-  {
-    category: "Desserts",
-    items: [
-      {
-        name: "Lemon Dessert",
-        price: "$5.00",
-        description: "Grandma's authentic lemon cake recipe, made with locally sourced ingredients.",
-        image: lemonDessert,
-      },
-    ],
-  },
+const fallbackItems = [
+  { id: 1, title: "Greek Salad", price: "12.99", inventory: 50 },
+  { id: 2, title: "Bruschetta", price: "5.99", inventory: 30 },
+  { id: 3, title: "Grilled Fish", price: "20.00", inventory: 20 },
+  { id: 4, title: "Lemon Dessert", price: "5.00", inventory: 40 },
 ];
 
+const itemImages = {
+  "Greek Salad": greekSalad,
+  "Bruschetta": bruchetta,
+  "Lemon Dessert": lemonDessert,
+};
+
+function getImage(title) {
+  return itemImages[title] || restaurantFood;
+}
+
 function Menu() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchMenuItems()
+      .then((data) => setItems(data))
+      .catch(() => setItems(fallbackItems))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
-      {menuItems.map((section) => (
-        <section key={section.category} className="menu-section">
-          <h3>{section.category}</h3>
-          <div className="menu-grid">
-            {section.items.map((item) => (
-              <div className="menu-card" key={item.name}>
-                <img src={item.image} alt={item.name} />
-                <div className="menu-card-body">
-                  <div className="menu-card-title">
-                    <span>{item.name}</span>
-                    <span className="menu-price">{item.price}</span>
-                  </div>
-                  <p>{item.description}</p>
+      {loading ? (
+        <p>Loading menu...</p>
+      ) : (
+        <div className="menu-grid">
+          {items.map((item) => (
+            <div className="menu-card" key={item.id}>
+              <img src={getImage(item.title)} alt={item.title} />
+              <div className="menu-card-body">
+                <div className="menu-card-title">
+                  <span>{item.title}</span>
+                  <span className="menu-price">${item.price}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-      ))}
+            </div>
+          ))}
+        </div>
+      )}
     </main>
   );
 }
