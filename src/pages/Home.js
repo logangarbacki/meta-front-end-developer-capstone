@@ -30,7 +30,12 @@ function Home() {
         <div className="specials-grid">
           {specials.map((item) => (
             <div className="special-card" key={item.id}>
-              <img src={item.image_url || restaurantFood} alt={item.title} />
+              <div className="special-card-image">
+                <img src={item.image_url || restaurantFood} alt={item.title} />
+                {item.category && (
+                  <span className="special-card-category">{item.category}</span>
+                )}
+              </div>
               <div className="special-card-body">
                 <div className="special-card-title">
                   <span>{item.title}</span>

@@ -34,7 +34,7 @@
 
 .cart-drawer-header h3 {
   font-size: 18px;
-  color: #333;
+  color: var(--dark);
 }
 
 .cart-close {
@@ -81,12 +81,12 @@
 .cart-item-name {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--dark);
 }
 
 .cart-item-price {
   font-size: 15px;
-  color: #ee9972;
+  color: var(--salmon);
   font-weight: 700;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .cart-item-controls button {
-  background: #f4f4f4;
+  background: var(--light);
   border: none;
   width: 28px;
   height: 28px;
@@ -107,10 +107,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s;
 }
 
 .cart-item-controls button:hover {
-  background: #e0e0e0;
+  background: #ddd;
 }
 
 .cart-item-controls span {
@@ -136,24 +137,27 @@
   justify-content: space-between;
   font-size: 18px;
   font-weight: 700;
-  color: #333;
+  color: var(--dark);
   margin-bottom: 16px;
 }
 
 .cart-checkout-btn {
   width: 100%;
-  background: #f4ce14;
-  color: #333;
+  background: var(--yellow);
+  color: var(--dark);
   border: none;
   padding: 14px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'Inter', sans-serif;
 }
 
 .cart-checkout-btn:hover {
   background: #e0b800;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 480px) {

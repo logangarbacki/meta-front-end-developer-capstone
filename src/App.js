@@ -20,9 +20,8 @@ function App() {
       <CartProvider>
       <BrowserRouter>
         <Navbar />
-        <Hero />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<><Hero /><Home /></>} />
           <Route path="/about" element={<About />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/reserve" element={<Reserve />} />
