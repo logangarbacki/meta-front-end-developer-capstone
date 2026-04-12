@@ -24,6 +24,8 @@ A full-stack restaurant web app built with React, connected to a live Django RES
 This app is powered by a separate Django REST API:
 https://github.com/logangarbacki/littlelemon-web-app-django
 
+Live: https://littlelemon-web-app-django-production.up.railway.app/api/
+
 The API base URL is configured via the `REACT_APP_API_URL` environment variable.
 
 ## Local Development

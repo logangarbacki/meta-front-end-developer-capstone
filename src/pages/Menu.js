@@ -4,6 +4,7 @@ import bruchetta from "../assets/bruchetta.svg";
 import lemonDessert from "../assets/lemon dessert.jpg";
 import restaurantFood from "../assets/restauranfood.jpg";
 import { fetchMenuItems } from "../api/api";
+import { useCart } from "../context/CartContext";
 import "./Menu.css";
 
 const itemImages = {
@@ -31,6 +32,7 @@ function Menu() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { addItem } = useCart();
 
   useEffect(() => {
     fetchMenuItems()
@@ -51,6 +53,9 @@ function Menu() {
           <span>{item.title}</span>
           <span className="menu-price">${item.price}</span>
         </div>
+        <button className="add-to-cart-btn" onClick={() => addItem(item)}>
+          Add to Cart
+        </button>
       </div>
     </div>
   );

@@ -74,6 +74,24 @@
   line-height: 1.6;
 }
 
+.add-to-cart-btn {
+  margin-top: 12px;
+  width: 100%;
+  background: #495e57;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  background: #3a4d47;
+}
+
 .menu-empty {
   color: #777;
   font-size: 16px;
