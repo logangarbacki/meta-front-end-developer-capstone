@@ -5,6 +5,8 @@ import lemonDessert from "../assets/lemon dessert.jpg";
 import restaurantFood from "../assets/restauranfood.jpg";
 import { fetchMenuItems } from "../api/api";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./Menu.css";
 
 const itemImages = {
@@ -33,6 +35,16 @@ function Menu() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const { addItem } = useCart();
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAddToCart = (item) => {
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
+    addItem(item);
+  };
 
   useEffect(() => {
     fetchMenuItems()
@@ -53,7 +65,7 @@ function Menu() {
           <span>{item.title}</span>
           <span className="menu-price">${item.price}</span>
         </div>
-        <button className="add-to-cart-btn" onClick={() => addItem(item)}>
+        <button className="add-to-cart-btn" onClick={() => handleAddToCart(item)}>
           Add to Cart
         </button>
       </div>
