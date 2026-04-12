@@ -23,7 +23,19 @@ function Home() {
           <h2>This Week's Specials</h2>
           <Link to="/menu" aria-label="View online menu" className="online-menu-btn">Online Menu</Link>
         </div>
-        {loading && <p>Loading specials...</p>}
+        {loading && (
+          <div className="specials-grid">
+            {[1, 2, 3].map((n) => (
+              <div className="skeleton-card" key={n}>
+                <div className="skeleton-img" />
+                <div className="skeleton-body">
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line skeleton-line--short" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
         {!loading && specials.length === 0 && (
           <p className="specials-empty">No specials this week — check back soon!</p>
         )}

@@ -8,18 +8,31 @@
 
 :root {
   --green: #495e57;
+  --green-dark: #3a4d47;
+  --green-light: rgba(73, 94, 87, 0.08);
   --yellow: #f4ce14;
+  --yellow-dark: #e0b800;
   --salmon: #ee9972;
   --light-salmon: #fbdabb;
   --dark: #333333;
   --mid: #555555;
   --light: #edefee;
+  --border: #e4e4e4;
   --white: #ffffff;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+  --error: #c0392b;
+  --error-bg: #fff0f0;
+  --error-border: #f5c6cb;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.11);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.16);
   --radius: 16px;
   --radius-sm: 8px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -27,8 +40,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--dark);
-  background: #fafafa;
+  background: #f7f7f5;
   line-height: 1.6;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 h1, h2, h3 {

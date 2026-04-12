@@ -8,6 +8,19 @@
   font-size: 48px;
   color: var(--dark);
   margin-bottom: 48px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.menu > h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 56px;
+  height: 4px;
+  background: var(--yellow);
+  border-radius: 2px;
 }
 
 .menu-section {
@@ -46,18 +59,45 @@
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+  position: relative;
+}
+
+.menu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
 }
 
 .menu-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+}
+
+.menu-card:hover::after {
+  transform: scaleX(1);
+}
+
+.menu-card-img {
+  overflow: hidden;
 }
 
 .menu-card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+
+.menu-card:hover img {
+  transform: scale(1.06);
 }
 
 .menu-card-body {
@@ -89,18 +129,79 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s var(--ease), transform 0.15s var(--ease);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
 }
 
 .add-to-cart-btn:hover {
-  background: #3a4d47;
+  background: var(--green-dark);
   transform: translateY(-1px);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
 }
 
 .menu-empty {
   color: var(--mid);
   font-size: 16px;
   margin-top: 24px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.menu-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.menu-skeleton-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.menu-skeleton-img {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.menu-skeleton-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-skeleton-line {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.menu-skeleton-line--short {
+  width: 35%;
+}
+
+.menu-skeleton-btn {
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, #f0f0f0 25%, #e6e6e6 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  margin-top: 4px;
 }
 
 @media (max-width: 768px) {

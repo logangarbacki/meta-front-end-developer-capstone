@@ -35,8 +35,14 @@
 }
 
 .navbar-links a:hover {
-  background: #f0f0f0;
+  background: var(--light);
   color: var(--green);
+}
+
+.navbar-links a.active {
+  color: var(--green);
+  background: var(--green-light);
+  font-weight: 600;
 }
 
 .navbar-login {
@@ -88,7 +94,7 @@
 }
 
 .navbar-cart:hover {
-  background: #f0f0f0;
+  background: var(--light);
 }
 
 .cart-badge {

@@ -59,7 +59,9 @@ function Menu() {
 
   const renderCard = (item) => (
     <div className="menu-card" key={item.id}>
-      <img src={item.image_url || getImage(item.title)} alt={item.title} />
+      <div className="menu-card-img">
+        <img src={item.image_url || getImage(item.title)} alt={item.title} />
+      </div>
       <div className="menu-card-body">
         <div className="menu-card-title">
           <span>{item.title}</span>
@@ -75,7 +77,20 @@ function Menu() {
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
-      {loading && <p>Loading menu...</p>}
+      {loading && (
+        <div className="menu-skeleton-grid">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div className="menu-skeleton-card" key={n}>
+              <div className="menu-skeleton-img" />
+              <div className="menu-skeleton-body">
+                <div className="menu-skeleton-line" />
+                <div className="menu-skeleton-line menu-skeleton-line--short" />
+                <div className="menu-skeleton-btn" />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       {error && <p className="menu-empty">Menu unavailable right now — check back soon.</p>}
       {!loading && !error && items.length === 0 && (
         <p className="menu-empty">No menu items available yet.</p>
