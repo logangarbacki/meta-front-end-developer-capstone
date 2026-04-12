@@ -56,7 +56,7 @@ function Menu() {
           <div className="menu-grid">
             {grouped[category].map((item) => (
               <div className="menu-card" key={item.id}>
-                <img src={getImage(item.title)} alt={item.title} />
+                <img src={item.image_url || getImage(item.title)} alt={item.title} />
                 <div className="menu-card-body">
                   <div className="menu-card-title">
                     <span>{item.title}</span>
