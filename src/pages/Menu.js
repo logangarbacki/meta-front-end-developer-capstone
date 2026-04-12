@@ -39,8 +39,21 @@ function Menu() {
       .finally(() => setLoading(false));
   }, []);
 
+  const featured = items.filter((item) => item.featured);
   const grouped = groupByCategory(items);
   const categories = CATEGORY_ORDER.filter((c) => grouped[c]);
+
+  const renderCard = (item) => (
+    <div className="menu-card" key={item.id}>
+      <img src={item.image_url || getImage(item.title)} alt={item.title} />
+      <div className="menu-card-body">
+        <div className="menu-card-title">
+          <span>{item.title}</span>
+          <span className="menu-price">${item.price}</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
@@ -50,21 +63,19 @@ function Menu() {
       {!loading && !error && items.length === 0 && (
         <p className="menu-empty">No menu items available yet.</p>
       )}
+      {!loading && !error && featured.length > 0 && (
+        <section className="menu-section menu-section--featured">
+          <h3>⭐ This Week's Specials</h3>
+          <div className="menu-grid">
+            {featured.map(renderCard)}
+          </div>
+        </section>
+      )}
       {!loading && !error && categories.map((category) => (
         <section key={category} className="menu-section">
           <h3>{category}</h3>
           <div className="menu-grid">
-            {grouped[category].map((item) => (
-              <div className="menu-card" key={item.id}>
-                <img src={item.image_url || getImage(item.title)} alt={item.title} />
-                <div className="menu-card-body">
-                  <div className="menu-card-title">
-                    <span>{item.title}</span>
-                    <span className="menu-price">${item.price}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {grouped[category].map(renderCard)}
           </div>
         </section>
       ))}

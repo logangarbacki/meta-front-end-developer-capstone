@@ -20,6 +20,18 @@
   margin-bottom: 24px;
 }
 
+.menu-section--featured {
+  background: #fffbea;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 48px;
+}
+
+.menu-section--featured h3 {
+  color: #b8860b;
+  border-bottom-color: #f4ce14;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
