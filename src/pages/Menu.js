@@ -6,6 +6,7 @@ import restaurantFood from "../assets/restauranfood.jpg";
 import { fetchMenuItems } from "../api/api";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import { useNavigate } from "react-router-dom";
 import "./Menu.css";
 
@@ -36,6 +37,7 @@ function Menu() {
   const [error, setError] = useState(false);
   const { addItem } = useCart();
   const { isLoggedIn } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleAddToCart = (item) => {
@@ -44,6 +46,7 @@ function Menu() {
       return;
     }
     addItem(item);
+    addToast(`${item.title} added to cart`);
   };
 
   useEffect(() => {

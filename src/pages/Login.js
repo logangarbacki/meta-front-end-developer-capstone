@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import "./Auth.css";
 
 function Login() {
@@ -9,6 +10,7 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,6 +24,7 @@ function Login() {
     if (response.ok) {
       const data = await response.json();
       login(data.auth_token, form.username);
+      addToast(`Welcome back, ${form.username}!`);
       navigate("/");
     } else {
       setError("Invalid username or password.");

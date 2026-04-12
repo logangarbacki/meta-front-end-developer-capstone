@@ -1,7 +1,9 @@
 import "./App.css";
+import "./components/Toast.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
@@ -16,6 +18,7 @@ import Footer from "./pages/Footer";
 
 function App() {
   return (
+    <ToastProvider>
     <AuthProvider>
       <CartProvider>
       <BrowserRouter>
@@ -34,6 +37,7 @@ function App() {
       </BrowserRouter>
       </CartProvider>
     </AuthProvider>
+    </ToastProvider>
   );
 }
 
