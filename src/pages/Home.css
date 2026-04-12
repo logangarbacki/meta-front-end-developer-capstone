@@ -1,102 +1,123 @@
 .home {
-  padding: 48px 80px;
+  padding: 72px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .specials-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .specials-header h2 {
-  font-size: 36px;
-  margin: 0;
-  color: #333;
-}
-
-.specials-empty {
-  color: #777;
-  font-size: 16px;
-  margin-top: 8px;
+  font-size: 48px;
+  color: var(--dark);
 }
 
 .online-menu-btn {
-  background-color: #f4ce14;
-  color: #333;
+  background-color: var(--yellow);
+  color: var(--dark);
   border: none;
   padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: var(--radius);
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
 }
 
 .online-menu-btn:hover {
   background-color: #e0b800;
+  transform: translateY(-1px);
 }
 
 .specials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 28px;
 }
 
 .special-card {
-  background: #fff;
-  border-radius: 12px;
+  background: var(--white);
+  border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.special-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
 }
 
 .special-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
 }
 
 .special-card-body {
-  padding: 16px;
+  padding: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .special-card-title {
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  align-items: baseline;
+  font-size: 20px;
   font-weight: 700;
-  color: #333;
+  color: var(--dark);
 }
 
 .special-price {
-  color: #ee9972;
-}
-
-.special-card-body p {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-  flex: 1;
+  color: var(--salmon);
+  font-size: 18px;
 }
 
 .special-card-body a {
-  font-weight: 700;
-  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--dark);
   text-decoration: none;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .special-card-body a:hover {
-  color: #495e57;
+  color: var(--green);
 }
 
-@media (max-width: 900px) {
+.specials-empty {
+  color: var(--mid);
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+  .specials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
   .home {
-    padding: 32px 24px;
+    padding: 48px 24px;
+  }
+
+  .specials-header h2 {
+    font-size: 36px;
   }
 
   .specials-grid {
