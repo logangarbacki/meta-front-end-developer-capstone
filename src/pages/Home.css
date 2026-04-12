@@ -15,6 +15,12 @@
   color: #333;
 }
 
+.specials-empty {
+  color: #777;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
 .online-menu-btn {
   background-color: #f4ce14;
   color: #333;

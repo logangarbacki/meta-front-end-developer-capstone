@@ -57,6 +57,12 @@ const fetchMenuItems = async function () {
   return response.json();
 };
 
+const fetchFeaturedItems = async function () {
+  const response = await fetch(`${API_BASE}/api/menu/?featured=true`);
+  if (!response.ok) throw new Error('Failed to fetch featured items');
+  return response.json();
+};
+
 const to24Hour = function (time) {
   const [timePart, modifier] = time.split(' ');
   let [hours, minutes] = timePart.split(':');
@@ -81,4 +87,4 @@ const submitAPI = async function (formData) {
   return response.ok;
 };
 
-export { fetchAPI, fetchMenuItems, submitAPI, registerUser, loginUser, logoutUser };
+export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, registerUser, loginUser, logoutUser };
