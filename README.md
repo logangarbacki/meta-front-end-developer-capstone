@@ -45,5 +45,10 @@ Unit tests cover form validation, booking submission logic, and component render
 
 ## Project Background
 
-Built as the capstone for the Meta Front-End Developer Professional Certificate on Coursera.
-https://www.coursera.org/professional-certificates/meta-front-end-developer
+Originally built as the capstone for the Meta Front-End Developer Professional Certificate on Coursera — but taken significantly further than the course requirements.
+
+The base requirement was a static React app with a hardcoded menu and a non-functional booking form. This version goes beyond that by integrating a real Django REST API backend (built separately for the Meta Back-End Developer capstone), adding token-based authentication, live data throughout, and deploying both as a connected full-stack application.
+
+Both capstones were completed independently, then merged into a single working product:
+- Meta Front-End Developer: https://www.coursera.org/professional-certificates/meta-front-end-developer
+- Meta Back-End Developer: https://www.coursera.org/professional-certificates/meta-back-end-developer
