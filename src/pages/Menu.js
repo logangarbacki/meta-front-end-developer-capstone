@@ -35,6 +35,8 @@ function Menu() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  useEffect(() => { document.title = "Menu | Little Lemon"; }, []);
   const { addItem } = useCart();
   const { isLoggedIn } = useAuth();
   const { addToast } = useToast();

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
 import { useAuth } from "../context/AuthContext";
@@ -10,6 +10,8 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+
+  useEffect(() => { document.title = "Sign In | Little Lemon"; }, []);
   const { addToast } = useToast();
   const navigate = useNavigate();
 

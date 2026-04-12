@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import "./Checkout.css";
 
 function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
+  useEffect(() => { document.title = "Checkout | Little Lemon"; }, []);
   const [form, setForm] = useState({ name: "", email: "" });
   const [confirmed, setConfirmed] = useState(false);
   const [orderNumber] = useState(() => Math.floor(100000 + Math.random() * 900000));

@@ -8,6 +8,8 @@ function Home() {
   const [specials, setSpecials] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => { document.title = "Little Lemon | Mediterranean Restaurant"; }, []);
+
   useEffect(() => {
     fetchFeaturedItems()
       .then((data) => setSpecials(data))

@@ -1,0 +1,61 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.error-code {
+  font-family: 'Markazi Text', serif;
+  font-size: clamp(100px, 20vw, 160px);
+  line-height: 1;
+  color: var(--green);
+  opacity: 0.12;
+  margin: 0;
+  user-select: none;
+}
+
+.error-content {
+  margin-top: -40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.error-content h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  color: var(--dark);
+  margin: 0;
+}
+
+.error-content p {
+  font-size: 16px;
+  color: var(--mid);
+  max-width: 380px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.error-home-btn {
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--yellow) 0%, #f8d835 100%);
+  color: var(--dark);
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 14px rgba(244, 206, 20, 0.35);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  display: inline-block;
+}
+
+.error-home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(244, 206, 20, 0.45);
+}

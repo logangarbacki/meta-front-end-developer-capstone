@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
 import { initializeTimes, updateTimes } from "../utils/bookingUtils";
@@ -8,6 +8,7 @@ import "./Reserve.css";
 
 function Reserve() {
   const { isLoggedIn } = useAuth();
+  useEffect(() => { document.title = "Reserve a Table | Little Lemon"; }, []);
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState(null);

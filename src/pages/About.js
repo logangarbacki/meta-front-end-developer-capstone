@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import marioAndAdrianA from "../assets/Mario and Adrian A.jpg";
 import marioAndAdrianB from "../assets/Mario and Adrian b.jpg";
 import "./About.css";
 
 function About() {
+  useEffect(() => { document.title = "About Us | Little Lemon"; }, []);
+
   return (
     <main className="about"aria-label="About Little Lemon restaurant">
       <section className="about-content">
