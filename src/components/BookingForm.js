@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const today = new Date().toISOString().split("T")[0];
+
 const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
   const [form, setForm] = useState({
     name: "",
@@ -59,6 +61,7 @@ const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
               name="date"
               value={form.date}
               onChange={handleChange}
+              min={today}
               required
             />
           </div>

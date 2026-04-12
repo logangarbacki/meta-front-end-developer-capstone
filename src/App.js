@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
+import BackToTop from "./components/BackToTop";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -34,6 +35,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
+        <BackToTop />
       </BrowserRouter>
       </CartProvider>
     </AuthProvider>

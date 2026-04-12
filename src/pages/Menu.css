@@ -23,6 +23,44 @@
   border-radius: 2px;
 }
 
+.menu-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.menu-tab {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mid);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.18s var(--ease), color 0.18s var(--ease), border-color 0.18s var(--ease), transform 0.15s var(--ease);
+}
+
+.menu-tab:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.menu-tab--active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+.menu-tab--active:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+}
+
 .menu-section {
   margin-bottom: 56px;
 }

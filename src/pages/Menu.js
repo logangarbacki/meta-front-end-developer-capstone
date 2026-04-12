@@ -35,8 +35,10 @@ function Menu() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [activeTab, setActiveTab] = useState("All");
 
   useEffect(() => { document.title = "Menu | Little Lemon"; }, []);
+
   const { addItem } = useCart();
   const { isLoggedIn } = useAuth();
   const { addToast } = useToast();
@@ -61,11 +63,16 @@ function Menu() {
   const featured = items.filter((item) => item.featured);
   const grouped = groupByCategory(items);
   const categories = CATEGORY_ORDER.filter((c) => grouped[c]);
+  const tabs = ["All", ...categories];
 
   const renderCard = (item) => (
     <div className="menu-card" key={item.id}>
       <div className="menu-card-img">
-        <img src={item.image_url || getImage(item.title)} alt={item.title} />
+        <img
+          src={item.image_url || getImage(item.title)}
+          alt={item.title}
+          loading="lazy"
+        />
       </div>
       <div className="menu-card-body">
         <div className="menu-card-title">
@@ -79,9 +86,13 @@ function Menu() {
     </div>
   );
 
+  const showFeatured = activeTab === "All" && featured.length > 0;
+  const visibleCategories = activeTab === "All" ? categories : categories.filter(c => c === activeTab);
+
   return (
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <h2>Our Menu</h2>
+
       {loading && (
         <div className="menu-skeleton-grid">
           {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -96,11 +107,29 @@ function Menu() {
           ))}
         </div>
       )}
+
+      {!loading && !error && items.length > 0 && (
+        <div className="menu-tabs" role="tablist" aria-label="Filter by category">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              role="tab"
+              aria-selected={activeTab === tab}
+              className={`menu-tab${activeTab === tab ? " menu-tab--active" : ""}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      )}
+
       {error && <p className="menu-empty">Menu unavailable right now — check back soon.</p>}
       {!loading && !error && items.length === 0 && (
         <p className="menu-empty">No menu items available yet.</p>
       )}
-      {!loading && !error && featured.length > 0 && (
+
+      {!loading && !error && showFeatured && (
         <section className="menu-section menu-section--featured">
           <h3>⭐ This Week's Specials</h3>
           <div className="menu-grid">
@@ -108,7 +137,8 @@ function Menu() {
           </div>
         </section>
       )}
-      {!loading && !error && categories.map((category) => (
+
+      {!loading && !error && visibleCategories.map((category) => (
         <section key={category} className="menu-section">
           <h3>{category}</h3>
           <div className="menu-grid">
