@@ -25,6 +25,24 @@ export function CartProvider({ children }) {
     });
   };
 
+  // Merge a guest cart array into the current cart (used on login)
+  const mergeCart = (guestItems) => {
+    setItems((prev) => {
+      let merged = [...prev];
+      guestItems.forEach((gItem) => {
+        const existing = merged.find((i) => i.id === gItem.id);
+        if (existing) {
+          merged = merged.map((i) =>
+            i.id === gItem.id ? { ...i, qty: i.qty + gItem.qty } : i
+          );
+        } else {
+          merged = [...merged, gItem];
+        }
+      });
+      return merged;
+    });
+  };
+
   const removeItem = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
 
   const updateQty = (id, qty) => {
@@ -38,7 +56,7 @@ export function CartProvider({ children }) {
   const totalPrice = items.reduce((sum, i) => sum + parseFloat(i.price) * i.qty, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQty, clearCart, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ items, addItem, mergeCart, removeItem, updateQty, clearCart, totalItems, totalPrice }}>
       {children}
     </CartContext.Provider>
   );

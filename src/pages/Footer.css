@@ -6,10 +6,10 @@
 }
 
 .footer-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto 40px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
   gap: 48px;
 }
 
@@ -22,6 +22,13 @@
 .footer-brand p {
   color: rgba(255,255,255,0.7);
   font-size: 15px;
+}
+
+.footer-brand-tagline {
+  margin-top: 12px;
+  font-size: 14px !important;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5) !important;
 }
 
 .footer h3 {
@@ -64,6 +71,66 @@
   padding-top: 24px;
   font-size: 14px;
   color: rgba(255,255,255,0.5);
+}
+
+.footer-newsletter p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  transition: border-color 0.18s;
+}
+
+.newsletter-form:focus-within {
+  border-color: var(--yellow);
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  min-width: 0;
+}
+
+.newsletter-form input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.newsletter-form button {
+  background: var(--yellow);
+  color: var(--dark);
+  border: none;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.newsletter-form button:hover {
+  background: var(--yellow-dark);
+}
+
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
 }
 
 @media (max-width: 768px) {

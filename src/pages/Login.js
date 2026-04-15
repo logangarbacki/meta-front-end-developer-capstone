@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import "./Auth.css";
 
@@ -10,10 +11,11 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-
-  useEffect(() => { document.title = "Sign In | Little Lemon"; }, []);
+  const { items: guestCart, mergeCart } = useCart();
   const { addToast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => { document.title = "Sign In | Little Lemon"; }, []);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -26,6 +28,7 @@ function Login() {
     if (response.ok) {
       const data = await response.json();
       login(data.auth_token, form.username);
+      if (guestCart.length > 0) mergeCart(guestCart);
       addToast(`Welcome back, ${form.username}!`);
       navigate("/");
     } else {

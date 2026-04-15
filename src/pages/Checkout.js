@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
+import { useToast } from "../context/ToastContext";
 import { Link } from "react-router-dom";
 import "./Checkout.css";
 
 function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
+  const { addToast } = useToast();
   useEffect(() => { document.title = "Checkout | Little Lemon"; }, []);
   const [form, setForm] = useState({ name: "", email: "" });
   const [confirmed, setConfirmed] = useState(false);
@@ -16,6 +18,7 @@ function Checkout() {
     e.preventDefault();
     clearCart();
     setConfirmed(true);
+    addToast(`Order #${orderNumber} placed! Thanks, ${form.name}!`);
   };
 
   if (items.length === 0 && !confirmed) {

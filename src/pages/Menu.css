@@ -4,15 +4,24 @@
   margin: 0 auto;
 }
 
-.menu > h2 {
-  font-size: 48px;
-  color: var(--dark);
+.menu-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
   margin-bottom: 48px;
-  position: relative;
-  padding-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.menu > h2::after {
+.menu-header h2 {
+  font-size: 48px;
+  color: var(--dark);
+  position: relative;
+  padding-bottom: 12px;
+  margin: 0;
+}
+
+.menu-header h2::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -21,6 +30,61 @@
   height: 4px;
   background: var(--yellow);
   border-radius: 2px;
+}
+
+.menu-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.menu-search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.menu-search-input {
+  padding: 10px 40px 10px 38px;
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  width: 220px;
+  transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease), width 0.25s var(--ease);
+  outline: none;
+}
+
+.menu-search-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-light);
+  width: 280px;
+}
+
+.menu-search-input::placeholder {
+  color: #aaa;
+}
+
+.menu-search-clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 50%;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+
+.menu-search-clear:hover {
+  color: var(--dark);
+  background: var(--light);
 }
 
 .menu-tabs {
@@ -181,6 +245,12 @@
   transform: translateY(0);
 }
 
+.add-to-cart-btn--added {
+  background: #2e7d5e;
+  cursor: default;
+  transform: none !important;
+}
+
 .menu-empty {
   color: var(--mid);
   font-size: 16px;
@@ -247,7 +317,25 @@
     padding: 48px 24px;
   }
 
-  .menu > h2 {
+  .menu-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .menu-header h2 {
     font-size: 36px;
+  }
+
+  .menu-search-input {
+    width: 100%;
+  }
+
+  .menu-search-input:focus {
+    width: 100%;
+  }
+
+  .menu-search {
+    width: 100%;
   }
 }

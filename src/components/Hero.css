@@ -81,12 +81,13 @@
 
 @media (max-width: 900px) {
   .hero {
-    padding: 56px 24px 56px;
+    padding: 56px 24px 0;
   }
 
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 32px;
+    align-items: end;
   }
 
   .hero-text {
@@ -97,7 +98,18 @@
     font-size: 52px;
   }
 
+  .hero-text h2 {
+    font-size: 28px;
+  }
+
   .hero-image {
-    display: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image img {
+    height: 280px;
+    max-width: 100%;
+    border-radius: var(--radius) var(--radius) 0 0;
   }
 }

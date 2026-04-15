@@ -6,6 +6,7 @@ import { CartProvider } from "./context/CartContext";
 import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import BackToTop from "./components/BackToTop";
+import PageTransition from "./components/PageTransition";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,16 +25,18 @@ function App() {
       <CartProvider>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<><Hero /><Home /></>} />
-          <Route path="/about" element={<About />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/reserve" element={<Reserve />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<><Hero /><Home /></>} />
+            <Route path="/about" element={<About />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/reserve" element={<Reserve />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </PageTransition>
         <Footer />
         <BackToTop />
       </BrowserRouter>
