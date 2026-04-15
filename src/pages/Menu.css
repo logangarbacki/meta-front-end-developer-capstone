@@ -221,6 +221,17 @@
   font-weight: 700;
 }
 
+.menu-card-desc {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
 .add-to-cart-btn {
   width: 100%;
   background: var(--green);

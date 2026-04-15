@@ -50,6 +50,7 @@ const Navbar = () => {
           <li><NavLink to="/reserve" onClick={closeMenu}>Reserve</NavLink></li>
           {isLoggedIn ? (
             <>
+              <li><NavLink to="/bookings" onClick={closeMenu}>My Bookings</NavLink></li>
               <li className="navbar-username">Hi, {username}</li>
               <li><button className="navbar-logout" onClick={handleLogout}>Logout</button></li>
             </>

@@ -90,6 +90,9 @@ function Menu() {
           <span>{item.title}</span>
           <span className="menu-price">${item.price}</span>
         </div>
+        {item.description && (
+          <p className="menu-card-desc">{item.description}</p>
+        )}
         <button
           className={`add-to-cart-btn${addedIds[item.id] ? " add-to-cart-btn--added" : ""}`}
           onClick={() => handleAddToCart(item)}

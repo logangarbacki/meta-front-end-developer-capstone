@@ -16,6 +16,7 @@ import Reserve from "./pages/Reserve";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Checkout from "./pages/Checkout";
+import Bookings from "./pages/Bookings";
 import Footer from "./pages/Footer";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/bookings" element={<Bookings />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </PageTransition>
