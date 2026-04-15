@@ -3,6 +3,7 @@ import "./components/Toast.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { OrdersProvider } from "./context/OrdersContext";
 import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import BackToTop from "./components/BackToTop";
@@ -24,6 +25,7 @@ function App() {
     <ToastProvider>
     <AuthProvider>
       <CartProvider>
+      <OrdersProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Navbar />
@@ -43,6 +45,7 @@ function App() {
         <Footer />
         <BackToTop />
       </BrowserRouter>
+      </OrdersProvider>
       </CartProvider>
     </AuthProvider>
     </ToastProvider>

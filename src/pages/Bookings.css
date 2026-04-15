@@ -9,7 +9,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
 }
 
@@ -33,11 +33,18 @@
   color: var(--mid);
 }
 
-.bookings-new-btn {
+.bookings-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-self: flex-start;
+}
+
+.bookings-action-btn {
   background: var(--yellow);
   color: var(--dark);
   text-decoration: none;
-  padding: 12px 24px;
+  padding: 11px 20px;
   border-radius: var(--radius);
   font-size: 14px;
   font-weight: 700;
@@ -45,25 +52,86 @@
   white-space: nowrap;
   transition: background 0.18s, transform 0.15s;
   display: inline-block;
-  align-self: flex-start;
+  border: none;
+  cursor: pointer;
 }
 
-.bookings-new-btn:hover {
+.bookings-action-btn:hover {
   background: var(--yellow-dark);
   transform: translateY(-1px);
 }
 
+.bookings-action-btn--outline {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--mid);
+}
+
+.bookings-action-btn--outline:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: transparent;
+}
+
+/* ── Tabs ── */
+.bookings-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--light);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-bottom: 40px;
+  width: fit-content;
+}
+
+.bookings-tab {
+  background: none;
+  border: none;
+  padding: 9px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mid);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.18s, color 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bookings-tab:hover {
+  color: var(--dark);
+}
+
+.bookings-tab--active {
+  background: var(--white);
+  color: var(--dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.bookings-tab-badge {
+  background: var(--green);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  line-height: 1.4;
+}
+
+/* ── Sections ── */
 .bookings-section {
   margin-bottom: 48px;
 }
 
 .bookings-section-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--mid);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
 }
@@ -74,6 +142,7 @@
   gap: 12px;
 }
 
+/* ── Booking card ── */
 .booking-card {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -81,7 +150,7 @@
   padding: 20px 24px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
@@ -91,7 +160,7 @@
 }
 
 .booking-card--muted {
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .booking-card-date {
@@ -114,7 +183,7 @@
 }
 
 .booking-month {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -126,6 +195,7 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0;
 }
 
 .booking-name {
@@ -136,7 +206,7 @@
 }
 
 .booking-details {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--mid);
   margin: 0;
 }
@@ -150,7 +220,7 @@
 .booking-status {
   padding: 5px 14px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -158,7 +228,55 @@
   flex-shrink: 0;
 }
 
-/* Loading skeletons */
+/* ── Order card extras ── */
+.order-card {
+  align-items: flex-start;
+}
+
+.order-card-icon {
+  background: var(--yellow);
+  color: var(--dark);
+  align-items: center;
+  justify-content: center;
+}
+
+.order-address {
+  font-size: 12px !important;
+  color: var(--mid);
+  margin-top: 2px !important;
+}
+
+.order-items-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.order-item-chip {
+  background: var(--light);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.order-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.order-total {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+/* ── Skeletons ── */
 .bookings-loading {
   display: flex;
   flex-direction: column;
@@ -178,10 +296,10 @@
   100% { background-position: -200% 0; }
 }
 
-/* Empty / error states */
+/* ── Empty / error ── */
 .bookings-empty {
   text-align: center;
-  padding: 80px 24px;
+  padding: 72px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,12 +307,12 @@
 }
 
 .bookings-empty-icon {
-  font-size: 56px;
-  opacity: 0.4;
+  font-size: 52px;
+  opacity: 0.35;
 }
 
 .bookings-empty h3 {
-  font-size: 28px;
+  font-size: 26px;
   color: var(--dark);
 }
 
@@ -222,6 +340,13 @@
 
   .booking-card {
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 14px;
+  }
+
+  .order-card-right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 }
