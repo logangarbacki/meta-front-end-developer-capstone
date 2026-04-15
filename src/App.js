@@ -8,7 +8,6 @@ import Navbar from "./components/Navbar";
 import BackToTop from "./components/BackToTop";
 import PageTransition from "./components/PageTransition";
 import ScrollToTop from "./components/ScrollToTop";
-import Hero from "./components/Hero";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
@@ -29,7 +28,7 @@ function App() {
         <Navbar />
         <PageTransition>
           <Routes>
-            <Route path="/" element={<><Hero /><Home /></>} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/reserve" element={<Reserve />} />
