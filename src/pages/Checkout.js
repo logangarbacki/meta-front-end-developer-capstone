@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useOrders } from "../context/OrdersContext";
 import { useToast } from "../context/ToastContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Checkout.css";
 
 const DELIVERY_FEE = 3.99;
@@ -12,8 +12,6 @@ function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
   const { addOrder } = useOrders();
   const { addToast } = useToast();
-  const navigate = useNavigate();
-
   useEffect(() => { document.title = "Checkout | Little Lemon"; }, []);
 
   const [form, setForm] = useState({
@@ -21,7 +19,6 @@ function Checkout() {
     street: "", city: "", state: "", zip: "",
   });
   const [confirmed, setConfirmed] = useState(false);
-  const [orderRef] = useState(null);
   const [savedOrder, setSavedOrder] = useState(null);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
