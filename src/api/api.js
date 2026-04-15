@@ -52,15 +52,18 @@ const logoutUser = async function (token) {
 };
 
 const fetchMenuItems = async function () {
-  const response = await fetch(`${API_BASE}/api/menu/`);
+  const response = await fetch(`${API_BASE}/api/menu/?page_size=200`);
   if (!response.ok) throw new Error('Failed to fetch menu');
-  return response.json();
+  const data = await response.json();
+  // Handle both paginated {results:[]} and flat [] responses
+  return Array.isArray(data) ? data : (data.results ?? data);
 };
 
 const fetchFeaturedItems = async function () {
   const response = await fetch(`${API_BASE}/api/menu/?featured=true`);
   if (!response.ok) throw new Error('Failed to fetch featured items');
-  return response.json();
+  const data = await response.json();
+  return Array.isArray(data) ? data : (data.results ?? data);
 };
 
 const to24Hour = function (time) {
@@ -72,19 +75,33 @@ const to24Hour = function (time) {
   return `${String(hours).padStart(2, '0')}:${minutes}`;
 };
 
-const submitAPI = async function (formData) {
+const submitAPI = async function (formData, token) {
   const time24 = formData.time.includes('M') ? to24Hour(formData.time) : formData.time;
   const payload = {
     name: formData.name,
     no_of_guests: parseInt(formData.guests),
     booking_date: `${formData.date}T${time24}:00+00:00`,
   };
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Token ${token}`;
   const response = await fetch(`${API_BASE}/api/bookings/`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(payload),
   });
-  return response.ok;
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw err;
+  }
+  return true;
 };
 
-export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, registerUser, loginUser, logoutUser };
+const fetchMyBookings = async function (token) {
+  const response = await fetch(`${API_BASE}/api/bookings/mine/`, {
+    headers: { 'Authorization': `Token ${token}` },
+  });
+  if (!response.ok) throw new Error('Failed to fetch bookings');
+  return response.json();
+};
+
+export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, fetchMyBookings, registerUser, loginUser, logoutUser };

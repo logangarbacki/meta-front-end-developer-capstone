@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import "./Reserve.css";
 
 function Reserve() {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, token } = useAuth();
   useEffect(() => { document.title = "Reserve a Table | Little Lemon"; }, []);
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
   const [submitted, setSubmitted] = useState(false);
@@ -24,13 +24,19 @@ function Reserve() {
   const handleSubmit = async (form) => {
     setSubmitting(true);
     setError(null);
-    const success = await submitAPI(form);
-    setSubmitting(false);
-    if (success) {
+    try {
+      await submitAPI(form, token);
       setFormData(form);
       setSubmitted(true);
-    } else {
-      setError("Booking failed. Please try again.");
+    } catch (err) {
+      const msg =
+        err?.booking_date?.[0] ||
+        err?.non_field_errors?.[0] ||
+        err?.detail ||
+        "Booking failed. Please try again.";
+      setError(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
