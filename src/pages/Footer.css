@@ -65,6 +65,18 @@
   margin-bottom: 6px;
 }
 
+.footer-hours {
+  margin-top: 20px;
+}
+
+.footer-hours h3 {
+  margin-bottom: 8px;
+}
+
+.footer-hours p {
+  margin-bottom: 4px;
+}
+
 .footer-bottom {
   text-align: center;
   border-top: 1px solid rgba(255,255,255,0.15);

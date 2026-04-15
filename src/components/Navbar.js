@@ -18,6 +18,12 @@ const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    const onKeyDown = (e) => { if (e.key === "Escape") { setMenuOpen(false); setCartOpen(false); } };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   const handleLogout = async () => {
     await logoutUser(token);
     logout();

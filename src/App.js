@@ -7,6 +7,7 @@ import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import BackToTop from "./components/BackToTop";
 import PageTransition from "./components/PageTransition";
+import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./components/Hero";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -24,6 +25,7 @@ function App() {
     <AuthProvider>
       <CartProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Navbar />
         <PageTransition>
           <Routes>

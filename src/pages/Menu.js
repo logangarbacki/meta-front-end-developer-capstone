@@ -7,7 +7,7 @@ import { fetchMenuItems } from "../api/api";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Menu.css";
 
 const itemImages = {
@@ -155,6 +155,13 @@ function Menu() {
         </div>
       )}
 
+      {!loading && !error && items.length > 0 && (
+        <p className="menu-count">
+          Showing <strong>{filteredItems.length}</strong> item{filteredItems.length !== 1 ? "s" : ""}
+          {query ? ` for "${search}"` : activeTab !== "All" ? ` in ${activeTab}` : ""}
+        </p>
+      )}
+
       {error && <p className="menu-empty">Menu unavailable right now — check back soon.</p>}
       {!loading && !error && items.length === 0 && (
         <p className="menu-empty">No menu items available yet.</p>
@@ -180,6 +187,16 @@ function Menu() {
           </div>
         </section>
       ))}
+
+      {!loading && !error && items.length > 0 && (
+        <div className="menu-reserve-cta">
+          <div className="menu-reserve-cta-text">
+            <h3>Ready to dine in?</h3>
+            <p>Book a table and enjoy the full Little Lemon experience.</p>
+          </div>
+          <Link to="/reserve" className="menu-reserve-cta-btn">Reserve a Table →</Link>
+        </div>
+      )}
     </main>
   );
 }

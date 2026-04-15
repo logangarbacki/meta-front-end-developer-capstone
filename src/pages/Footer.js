@@ -37,9 +37,15 @@ function Footer() {
         <div className="footer-contact">
           <h3>Contact</h3>
           <p>123 Lemon Street</p>
-          <p>Chicago, IL</p>
+          <p>Chicago, IL 60601</p>
           <p>(312) 555-0198</p>
           <p>info@littlelemon.com</p>
+          <div className="footer-hours">
+            <h3>Hours</h3>
+            <p>Mon–Thu: 11am – 10pm</p>
+            <p>Fri–Sat: 11am – 11pm</p>
+            <p>Sunday: 12pm – 9pm</p>
+          </div>
         </div>
 
         <div className="footer-newsletter">
