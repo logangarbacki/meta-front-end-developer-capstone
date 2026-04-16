@@ -5,7 +5,6 @@ import logo from "../assets/Logo.svg";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
-import { useTheme } from "../context/ThemeContext";
 import { logoutUser } from "../api/api";
 import CartDrawer from "./CartDrawer";
 
@@ -13,7 +12,6 @@ const Navbar = () => {
   const { isLoggedIn, username, token, logout } = useAuth();
   const { totalItems } = useCart();
   const { addToast } = useToast();
-  const { dark, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -58,7 +56,6 @@ const Navbar = () => {
           <li><NavLink to="/menu" onClick={closeMenu}>Menu</NavLink></li>
           <li><NavLink to="/reserve" onClick={closeMenu}>Reserve</NavLink></li>
           <li><NavLink to="/events" onClick={closeMenu}>Events</NavLink></li>
-          <li><NavLink to="/gallery" onClick={closeMenu}>Gallery</NavLink></li>
           {isLoggedIn ? (
             <>
               <li><NavLink to="/bookings" onClick={closeMenu}>My Bookings</NavLink></li>
@@ -80,10 +77,7 @@ const Navbar = () => {
 
         {/* Right side: theme + cart + hamburger */}
         <div className="navbar-right">
-          <button className="navbar-theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
-            {dark ? "☀️" : "🌙"}
-          </button>
-          <button className="navbar-cart" onClick={() => setCartOpen(true)} aria-label="Open cart">
+<button className="navbar-cart" onClick={() => setCartOpen(true)} aria-label="Open cart">
             🛒
             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
           </button>
