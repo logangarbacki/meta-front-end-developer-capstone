@@ -5,6 +5,8 @@ import "./Error.css";
 const QUICK_LINKS = [
   { to: "/", label: "Home" },
   { to: "/menu", label: "Menu" },
+  { to: "/events", label: "Events" },
+  { to: "/gallery", label: "Gallery" },
   { to: "/reserve", label: "Reserve a Table" },
   { to: "/bookings", label: "My Account" },
 ];

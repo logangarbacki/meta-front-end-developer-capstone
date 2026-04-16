@@ -9,6 +9,16 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  transition: height 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.navbar--scrolled {
+  height: 58px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.navbar--scrolled .navbar-logo {
+  height: 38px;
 }
 
 .navbar-logo {
@@ -80,6 +90,22 @@
 .navbar-logout:hover {
   border-color: var(--green);
   color: var(--green);
+}
+
+.navbar-theme-toggle {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s var(--ease), transform 0.2s;
+  line-height: 1;
+}
+
+.navbar-theme-toggle:hover {
+  background: var(--light);
+  transform: rotate(20deg);
 }
 
 /* ── Right side (cart + hamburger) ────────────── */

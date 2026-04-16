@@ -50,13 +50,17 @@ export function CartProvider({ children }) {
     setItems((prev) => prev.map((i) => i.id === id ? { ...i, qty } : i));
   };
 
+  const updateNotes = (id, notes) => {
+    setItems((prev) => prev.map((i) => i.id === id ? { ...i, notes } : i));
+  };
+
   const clearCart = () => setItems([]);
 
   const totalItems = items.reduce((sum, i) => sum + i.qty, 0);
   const totalPrice = items.reduce((sum, i) => sum + parseFloat(i.price) * i.qty, 0);
 
   return (
-    <CartContext.Provider value={{ items, addItem, mergeCart, removeItem, updateQty, clearCart, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ items, addItem, mergeCart, removeItem, updateQty, updateNotes, clearCart, totalItems, totalPrice }}>
       {children}
     </CartContext.Provider>
   );

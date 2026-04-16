@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useOrders } from "../context/OrdersContext";
-import { fetchMyBookings } from "../api/api";
+import { useCart } from "../context/CartContext";
+import { useToast } from "../context/ToastContext";
+import { fetchMyBookings, cancelBooking } from "../api/api";
 import "./Bookings.css";
 
 const STATUS_COLORS = {
@@ -31,11 +33,15 @@ function formatTime(dateStr) {
 
 function Bookings() {
   const { isLoggedIn, token, username } = useAuth();
-  const { orders } = useOrders();
+  const { orders, loyaltyPoints } = useOrders();
+  const { addItem, clearCart } = useCart();
+  const { addToast } = useToast();
+  const navigate = useNavigate();
   const [tab, setTab] = useState("reservations");
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [cancellingId, setCancellingId] = useState(null);
 
   useEffect(() => { document.title = "My Account | Little Lemon"; }, []);
 
@@ -46,6 +52,27 @@ function Bookings() {
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, [token]);
+
+  const handleCancel = async (id) => {
+    if (!window.confirm("Cancel this reservation?")) return;
+    setCancellingId(id);
+    try {
+      await cancelBooking(id, token);
+      setBookings((prev) => prev.map((b) => b.id === id ? { ...b, status: "cancelled" } : b));
+      addToast("Reservation cancelled.");
+    } catch {
+      addToast("Could not cancel. Please try again.", "error");
+    } finally {
+      setCancellingId(null);
+    }
+  };
+
+  const handleReorder = (order) => {
+    clearCart();
+    order.items.forEach((item) => addItem(item));
+    addToast(`${order.items.length} item${order.items.length !== 1 ? "s" : ""} added to cart`);
+    navigate("/checkout");
+  };
 
   if (!isLoggedIn) return <Navigate to="/login" replace />;
 
@@ -59,6 +86,12 @@ function Bookings() {
           <p className="bookings-eyebrow">Your account</p>
           <h2>Hi, {username}</h2>
           <p className="bookings-sub">Manage your reservations and delivery orders.</p>
+          {loyaltyPoints > 0 && (
+            <div className="loyalty-badge">
+              <span className="loyalty-icon">⭐</span>
+              <span><strong>{loyaltyPoints.toLocaleString()} pts</strong> — Loyalty Rewards</span>
+            </div>
+          )}
         </div>
         <div className="bookings-header-actions">
           <Link to="/reserve" className="bookings-action-btn">+ Reservation</Link>
@@ -108,7 +141,7 @@ function Bookings() {
             <section className="bookings-section">
               <h3 className="bookings-section-title">Upcoming</h3>
               <div className="bookings-list">
-                {upcoming.map(b => <BookingCard key={b.id} booking={b} />)}
+                {upcoming.map(b => <BookingCard key={b.id} booking={b} onCancel={handleCancel} cancelling={cancellingId === b.id} />)}
               </div>
             </section>
           )}
@@ -138,7 +171,7 @@ function Bookings() {
 
           {orders.length > 0 && (
             <div className="bookings-list">
-              {orders.map(order => <OrderCard key={order.id} order={order} />)}
+              {orders.map(order => <OrderCard key={order.id} order={order} onReorder={handleReorder} />)}
             </div>
           )}
         </div>
@@ -147,8 +180,9 @@ function Bookings() {
   );
 }
 
-function BookingCard({ booking, muted }) {
+function BookingCard({ booking, muted, onCancel, cancelling }) {
   const status = STATUS_COLORS[booking.status] || STATUS_COLORS.pending;
+  const isUpcoming = booking.status !== "cancelled" && new Date(booking.booking_date) >= new Date();
   return (
     <div className={`booking-card${muted ? " booking-card--muted" : ""}`}>
       <div className="booking-card-date">
@@ -162,9 +196,20 @@ function BookingCard({ booking, muted }) {
         <p className="booking-details">{formatDate(booking.booking_date)} · {formatTime(booking.booking_date)}</p>
         <p className="booking-guests">{booking.no_of_guests} guest{booking.no_of_guests !== 1 ? "s" : ""}</p>
       </div>
-      <span className="booking-status" style={{ background: status.bg, color: status.color }}>
-        {status.label}
-      </span>
+      <div className="booking-card-right">
+        <span className="booking-status" style={{ background: status.bg, color: status.color }}>
+          {status.label}
+        </span>
+        {isUpcoming && onCancel && (
+          <button
+            className="booking-cancel-btn"
+            onClick={() => onCancel(booking.id)}
+            disabled={cancelling}
+          >
+            {cancelling ? "Cancelling…" : "Cancel"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
@@ -200,7 +245,7 @@ function TrackingBar({ status }) {
   );
 }
 
-function OrderCard({ order }) {
+function OrderCard({ order, onReorder }) {
   const status = ORDER_STATUS_COLORS[order.status] || ORDER_STATUS_COLORS.preparing;
   return (
     <div className="booking-card order-card">
@@ -225,6 +270,7 @@ function OrderCard({ order }) {
           {status.label}
         </span>
         <span className="order-total">${order.total.toFixed(2)}</span>
+        <button className="booking-reorder-btn" onClick={() => onReorder(order)}>Reorder</button>
       </div>
     </div>
   );

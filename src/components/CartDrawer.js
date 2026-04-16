@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./CartDrawer.css";
 
 const CartDrawer = ({ open, onClose }) => {
-  const { items, removeItem, updateQty, totalItems, totalPrice } = useCart();
+  const { items, removeItem, updateQty, updateNotes, totalItems, totalPrice } = useCart();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -46,15 +46,28 @@ const CartDrawer = ({ open, onClose }) => {
             <ul className="cart-items">
               {items.map((item) => (
                 <li key={item.id} className="cart-item">
-                  <div className="cart-item-info">
-                    <span className="cart-item-name">{item.title}</span>
-                    <span className="cart-item-price">${(parseFloat(item.price) * item.qty).toFixed(2)}</span>
-                  </div>
-                  <div className="cart-item-controls">
-                    <button onClick={() => updateQty(item.id, item.qty - 1)} aria-label="Decrease quantity">−</button>
-                    <span>{item.qty}</span>
-                    <button onClick={() => updateQty(item.id, item.qty + 1)} aria-label="Increase quantity">+</button>
-                    <button className="cart-item-remove" onClick={() => removeItem(item.id)} aria-label={`Remove ${item.title}`}>✕</button>
+                  {item.image_url && (
+                    <img className="cart-item-thumb" src={item.image_url} alt={item.title} />
+                  )}
+                  <div className="cart-item-body">
+                    <div className="cart-item-info">
+                      <span className="cart-item-name">{item.title}</span>
+                      <span className="cart-item-price">${(parseFloat(item.price) * item.qty).toFixed(2)}</span>
+                    </div>
+                    <div className="cart-item-controls">
+                      <button onClick={() => updateQty(item.id, item.qty - 1)} aria-label="Decrease quantity">−</button>
+                      <span>{item.qty}</span>
+                      <button onClick={() => updateQty(item.id, item.qty + 1)} aria-label="Increase quantity">+</button>
+                      <button className="cart-item-remove" onClick={() => removeItem(item.id)} aria-label={`Remove ${item.title}`}>✕</button>
+                    </div>
+                    <input
+                      className="cart-item-notes"
+                      type="text"
+                      placeholder="Special instructions..."
+                      value={item.notes || ""}
+                      onChange={(e) => updateNotes(item.id, e.target.value)}
+                      maxLength={80}
+                    />
                   </div>
                 </li>
               ))}

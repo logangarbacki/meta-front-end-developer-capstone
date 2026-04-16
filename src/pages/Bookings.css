@@ -228,6 +228,75 @@
   flex-shrink: 0;
 }
 
+/* ── Loyalty badge ── */
+.loyalty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--yellow) 0%, #f8d835 100%);
+  color: var(--dark);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+.loyalty-icon {
+  font-size: 14px;
+}
+
+/* ── Booking card right ── */
+.booking-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.booking-cancel-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--error);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.booking-cancel-btn:hover {
+  background: var(--error-bg);
+  border-color: var(--error);
+}
+
+.booking-cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.booking-reorder-btn {
+  background: var(--yellow);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.booking-reorder-btn:hover {
+  background: var(--yellow-dark);
+  transform: translateY(-1px);
+}
+
 /* ── Order card extras ── */
 .order-card {
   align-items: flex-start;

@@ -5,6 +5,7 @@ import logo from "../assets/Logo.svg";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
+import { useTheme } from "../context/ThemeContext";
 import { logoutUser } from "../api/api";
 import CartDrawer from "./CartDrawer";
 
@@ -12,9 +13,11 @@ const Navbar = () => {
   const { isLoggedIn, username, token, logout } = useAuth();
   const { totalItems } = useCart();
   const { addToast } = useToast();
+  const { dark, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -22,6 +25,12 @@ const Navbar = () => {
     const onKeyDown = (e) => { if (e.key === "Escape") { setMenuOpen(false); setCartOpen(false); } };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleLogout = async () => {
@@ -34,7 +43,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`}>
         <img src={logo} alt="Little Lemon Logo" className="navbar-logo" />
 
         {/* Desktop + mobile nav links */}
@@ -48,6 +57,8 @@ const Navbar = () => {
           <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
           <li><NavLink to="/menu" onClick={closeMenu}>Menu</NavLink></li>
           <li><NavLink to="/reserve" onClick={closeMenu}>Reserve</NavLink></li>
+          <li><NavLink to="/events" onClick={closeMenu}>Events</NavLink></li>
+          <li><NavLink to="/gallery" onClick={closeMenu}>Gallery</NavLink></li>
           {isLoggedIn ? (
             <>
               <li><NavLink to="/bookings" onClick={closeMenu}>My Bookings</NavLink></li>
@@ -67,8 +78,11 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Right side: cart + hamburger */}
+        {/* Right side: theme + cart + hamburger */}
         <div className="navbar-right">
+          <button className="navbar-theme-toggle" onClick={toggleTheme} aria-label="Toggle dark mode">
+            {dark ? "☀️" : "🌙"}
+          </button>
           <button className="navbar-cart" onClick={() => setCartOpen(true)} aria-label="Open cart">
             🛒
             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}

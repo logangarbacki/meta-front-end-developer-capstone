@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import greekSalad from "../assets/greek salad.jpg";
 import lemonDessert from "../assets/lemon dessert.jpg";
 import restaurantFood from "../assets/restauranfood.jpg";
@@ -38,8 +38,20 @@ function Menu() {
   const [addedIds, setAddedIds] = useState({});
   const [search, setSearch] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
+  const searchRef = useRef(null);
 
   useEffect(() => { document.title = "Menu | Little Lemon"; }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   const { addItem } = useCart();
   const { isLoggedIn } = useAuth();
@@ -130,8 +142,9 @@ function Menu() {
         <div className="menu-search">
           <span className="menu-search-icon" aria-hidden="true">🔍</span>
           <input
+            ref={searchRef}
             type="search"
-            placeholder="Search menu..."
+            placeholder="Search menu…  (/)"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setActiveTab("All"); }}
             className="menu-search-input"

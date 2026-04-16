@@ -12,6 +12,7 @@ const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
     time: "",
     guests: 1,
     occasion: "",
+    seating: "",
   });
 
   const handleChange = (e) => {
@@ -102,6 +103,17 @@ const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
               <option value="Other">Other</option>
             </select>
           </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="seating">Seating Preference (optional)</label>
+          <select id="seating" name="seating" value={form.seating} onChange={handleChange}>
+            <option value="">No preference</option>
+            <option value="Indoor">Indoor</option>
+            <option value="Outdoor / Patio">Outdoor / Patio</option>
+            <option value="Bar">Bar</option>
+            <option value="Private Room">Private Room</option>
+          </select>
         </div>
 
         <button type="submit" className="reserve-btn" disabled={submitting}>

@@ -1,0 +1,130 @@
+.events-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 80px;
+}
+
+.events-hero {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.events-eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--salmon);
+  margin-bottom: 8px;
+}
+
+.events-hero h2 {
+  font-size: 52px;
+  color: var(--dark);
+  margin-bottom: 14px;
+}
+
+.events-sub {
+  font-size: 17px;
+  color: var(--mid);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.event-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.event-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.event-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.event-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.event-date {
+  font-size: 12px;
+  color: var(--mid);
+  font-weight: 600;
+  margin: 0;
+}
+
+.event-title {
+  font-size: 24px;
+  color: var(--dark);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.event-time {
+  font-size: 13px;
+  color: var(--mid);
+  font-weight: 600;
+  margin: 0;
+}
+
+.event-desc {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.event-reserve-btn {
+  margin-top: 8px;
+  background: var(--yellow);
+  color: var(--dark);
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  display: inline-block;
+  transition: background 0.18s, transform 0.15s;
+  align-self: flex-start;
+}
+
+.event-reserve-btn:hover {
+  background: var(--yellow-dark);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .events-page {
+    padding: 48px 24px;
+  }
+
+  .events-hero h2 {
+    font-size: 36px;
+  }
+}

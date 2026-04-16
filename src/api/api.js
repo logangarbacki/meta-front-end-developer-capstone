@@ -104,4 +104,17 @@ const fetchMyBookings = async function (token) {
   return response.json();
 };
 
-export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, fetchMyBookings, registerUser, loginUser, logoutUser };
+const cancelBooking = async function (id, token) {
+  const response = await fetch(`${API_BASE}/api/bookings/${id}/`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`,
+    },
+    body: JSON.stringify({ status: 'cancelled' }),
+  });
+  if (!response.ok) throw new Error('Failed to cancel booking');
+  return response.json();
+};
+
+export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, fetchMyBookings, cancelBooking, registerUser, loginUser, logoutUser };

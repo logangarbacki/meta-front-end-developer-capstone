@@ -57,6 +57,10 @@ export function OrdersProvider({ children }) {
     setOrders((prev) => [order, ...prev]);
   };
 
+  const loyaltyPoints = orders
+    .filter((o) => o.status === "delivered")
+    .reduce((sum, o) => sum + Math.floor(o.total * 10), 0);
+
   const clearOrders = () => {
     // Clear any pending timers
     Object.values(timersRef.current).forEach((t) => {
@@ -67,7 +71,7 @@ export function OrdersProvider({ children }) {
   };
 
   return (
-    <OrdersContext.Provider value={{ orders, addOrder, clearOrders }}>
+    <OrdersContext.Provider value={{ orders, addOrder, clearOrders, loyaltyPoints }}>
       {children}
     </OrdersContext.Provider>
   );

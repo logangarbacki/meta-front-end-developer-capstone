@@ -75,6 +75,123 @@
   color: var(--mid);
 }
 
+.checkout-subtotal-row--discount {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.checkout-tip {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-bottom: 4px;
+}
+
+.checkout-tip-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+
+.checkout-tip-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.checkout-tip-btn {
+  background: var(--light);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--mid);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.checkout-tip-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.checkout-tip-btn--active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+.checkout-tip-custom {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  width: 120px;
+  outline: none;
+}
+
+.checkout-tip-custom:focus {
+  border-color: var(--green);
+}
+
+.checkout-promo {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.checkout-promo-input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--dark);
+  background: var(--white);
+  outline: none;
+}
+
+.checkout-promo-input:focus {
+  border-color: var(--green);
+}
+
+.checkout-promo-btn {
+  padding: 9px 16px;
+  background: var(--light);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--dark);
+  transition: background 0.15s;
+}
+
+.checkout-promo-btn:hover {
+  background: var(--border);
+}
+
+.checkout-promo-error {
+  font-size: 12px;
+  color: var(--error);
+}
+
+.checkout-promo-success {
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 600;
+}
+
 .checkout-total {
   display: flex;
   justify-content: space-between;

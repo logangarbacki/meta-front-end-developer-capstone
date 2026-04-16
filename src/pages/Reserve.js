@@ -4,10 +4,12 @@ import BookingForm from "../components/BookingForm";
 import { initializeTimes, updateTimes } from "../utils/bookingUtils";
 import { submitAPI } from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import { useConfetti } from "../hooks/useConfetti";
 import "./Reserve.css";
 
 function Reserve() {
   const { isLoggedIn, token } = useAuth();
+  const launchConfetti = useConfetti();
   useEffect(() => { document.title = "Reserve a Table | Little Lemon"; }, []);
   const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
   const [submitted, setSubmitted] = useState(false);
@@ -28,6 +30,7 @@ function Reserve() {
       await submitAPI(form, token);
       setFormData(form);
       setSubmitted(true);
+      launchConfetti();
     } catch (err) {
       const msg =
         err?.booking_date?.[0] ||
@@ -64,6 +67,12 @@ function Reserve() {
               <div className="reserve-success-row">
                 <span>Occasion</span>
                 <strong>{formData.occasion}</strong>
+              </div>
+            )}
+            {formData.seating && (
+              <div className="reserve-success-row">
+                <span>Seating</span>
+                <strong>{formData.seating}</strong>
               </div>
             )}
           </div>
