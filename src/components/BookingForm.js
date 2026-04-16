@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const today = new Date().toISOString().split("T")[0];
 
 const BookingForm = ({ availableTimes, onSubmit, submitting }) => {
+  const { username } = useAuth();
   const [form, setForm] = useState({
-    name: "",
+    name: username || "",
     email: "",
     date: "",
     time: "",

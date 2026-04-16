@@ -1,5 +1,5 @@
 import { useState, useReducer, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import BookingForm from "../components/BookingForm";
 import { initializeTimes, updateTimes } from "../utils/bookingUtils";
 import { submitAPI } from "../api/api";
@@ -44,16 +44,36 @@ function Reserve() {
     return (
       <main className="reserve" aria-label="Reservation confirmation page">
         <div className="reserve-success">
+          <div className="reserve-success-icon">✓</div>
           <h2 aria-live="polite">Reservation Confirmed!</h2>
-          <p>
-            Thank you, <strong>{formData.name}</strong>! We've reserved a table for{" "}
-            <strong>{formData.guests}</strong> guest{formData.guests > 1 ? "s" : ""} on{" "}
-            <strong>{formData.date}</strong> at <strong>{formData.time}</strong>.
-          </p>
-          <p>A confirmation will be sent to <strong>{formData.email}</strong>.</p>
-          <button onClick={() => setSubmitted(false)} className="reserve-btn">
-            Make Another Reservation
-          </button>
+          <p>Thank you, <strong>{formData.name}</strong>! We can't wait to see you.</p>
+          <div className="reserve-success-card">
+            <div className="reserve-success-row">
+              <span>Date</span>
+              <strong>{formData.date}</strong>
+            </div>
+            <div className="reserve-success-row">
+              <span>Time</span>
+              <strong>{formData.time}</strong>
+            </div>
+            <div className="reserve-success-row">
+              <span>Guests</span>
+              <strong>{formData.guests} guest{formData.guests > 1 ? "s" : ""}</strong>
+            </div>
+            {formData.occasion && (
+              <div className="reserve-success-row">
+                <span>Occasion</span>
+                <strong>{formData.occasion}</strong>
+              </div>
+            )}
+          </div>
+          <p className="reserve-success-note">Confirmation sent to <strong>{formData.email}</strong></p>
+          <div className="reserve-success-actions">
+            <Link to="/bookings" className="reserve-btn">View My Reservations</Link>
+            <button onClick={() => setSubmitted(false)} className="reserve-btn reserve-btn--outline">
+              Make Another
+            </button>
+          </div>
         </div>
       </main>
     );

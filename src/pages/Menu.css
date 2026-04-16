@@ -190,6 +190,28 @@
 
 .menu-card-img {
   overflow: hidden;
+  position: relative;
+}
+
+.menu-card-img::after {
+  content: 'View Details';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.22s var(--ease);
+  letter-spacing: 0.04em;
+}
+
+.menu-card:hover .menu-card-img::after {
+  opacity: 1;
 }
 
 .menu-card img {

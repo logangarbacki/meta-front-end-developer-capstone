@@ -59,3 +59,40 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(244, 206, 20, 0.45);
 }
+
+.error-quick-links {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.error-quick-label {
+  font-size: 13px;
+  color: var(--mid);
+  margin: 0;
+}
+
+.error-quick-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.error-quick-link {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mid);
+  text-decoration: none;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.error-quick-link:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
