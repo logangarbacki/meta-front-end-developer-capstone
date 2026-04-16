@@ -398,6 +398,122 @@
   color: var(--error);
 }
 
+/* ── Rewards ── */
+.rewards-header {
+  margin-bottom: 32px;
+}
+
+.rewards-pts-display {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rewards-pts-number {
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--dark);
+  font-family: 'Markazi Text', serif;
+  line-height: 1;
+}
+
+.rewards-pts-label {
+  font-size: 16px;
+  color: var(--mid);
+  font-weight: 500;
+}
+
+.rewards-hint {
+  font-size: 14px;
+  color: var(--mid);
+}
+
+.rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.reward-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.reward-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.reward-card--locked {
+  opacity: 0.55;
+}
+
+.reward-card--claimed {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+
+.reward-card-pts {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--salmon);
+}
+
+.reward-card-title {
+  font-size: 18px;
+  color: var(--dark);
+  margin: 0;
+}
+
+.reward-card-desc {
+  font-size: 13px;
+  color: var(--mid);
+  flex: 1;
+  margin: 0;
+}
+
+.reward-code {
+  font-size: 13px;
+  color: var(--green);
+  background: var(--green-light);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.reward-claim-btn {
+  background: var(--yellow);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: var(--dark);
+  transition: background 0.15s, transform 0.12s;
+}
+
+.reward-claim-btn:hover:not(:disabled) {
+  background: var(--yellow-dark);
+  transform: translateY(-1px);
+}
+
+.reward-claim-btn:disabled {
+  background: var(--light);
+  color: var(--mid);
+  cursor: not-allowed;
+  font-size: 11px;
+}
+
 /* ── Tracking bar ── */
 .tracking-bar {
   display: flex;

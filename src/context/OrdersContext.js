@@ -1,12 +1,15 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { useAuth } from "./AuthContext";
+import { postOrder, fetchMyOrders } from "../api/api";
 
 const OrdersContext = createContext(null);
 
-// How long each status lasts (ms)
-const PREPARING_DURATION = 30_000;  // 30s → on_the_way
-const ON_THE_WAY_DURATION = 60_000; // 60s → delivered
+const PREPARING_DURATION = 30_000;
+const ON_THE_WAY_DURATION = 60_000;
 
 export function OrdersProvider({ children }) {
+  const { token, isLoggedIn } = useAuth();
+
   const [orders, setOrders] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("ll_orders")) || [];
@@ -21,16 +24,47 @@ export function OrdersProvider({ children }) {
     localStorage.setItem("ll_orders", JSON.stringify(orders));
   }, [orders]);
 
+  useEffect(() => {
+    if (!isLoggedIn || !token) return;
+    fetchMyOrders(token)
+      .then((data) => {
+        setOrders((prev) => {
+          const apiIds = new Set(data.map((o) => o.order_number));
+          const localOnly = prev.filter((o) => !apiIds.has(o.orderNumber));
+          const merged = [
+            ...data.map((o) => ({
+              id: o.order_number,
+              orderNumber: o.order_number,
+              items: o.items,
+              subtotal: parseFloat(o.subtotal),
+              deliveryFee: parseFloat(o.delivery_fee),
+              tip: parseFloat(o.tip),
+              discount: parseFloat(o.discount),
+              total: parseFloat(o.total),
+              address: o.address,
+              name: o.name,
+              email: o.email,
+              status: o.status,
+              eta: o.eta,
+              placedAt: o.placed_at,
+            })),
+            ...localOnly,
+          ];
+          return merged;
+        });
+      })
+      .catch(() => {});
+  }, [isLoggedIn, token]);
+
   const updateStatus = (orderId, status) => {
     setOrders((prev) =>
       prev.map((o) => o.id === orderId ? { ...o, status } : o)
     );
   };
 
-  // Whenever a new "preparing" order appears, schedule its transitions
   useEffect(() => {
     orders.forEach((order) => {
-      if (timersRef.current[order.id]) return; // already scheduled
+      if (timersRef.current[order.id]) return;
 
       if (order.status === "preparing") {
         timersRef.current[order.id] = true;
@@ -43,7 +77,6 @@ export function OrdersProvider({ children }) {
         }, PREPARING_DURATION);
         timersRef.current[`${order.id}_t1`] = t1;
       } else if (order.status === "on_the_way") {
-        // App reloaded mid-delivery — finish the transition
         timersRef.current[order.id] = true;
         const t2 = setTimeout(() => {
           updateStatus(order.id, "delivered");
@@ -53,8 +86,26 @@ export function OrdersProvider({ children }) {
     });
   }, [orders]);
 
-  const addOrder = (order) => {
+  const addOrder = async (order) => {
     setOrders((prev) => [order, ...prev]);
+    if (token) {
+      try {
+        await postOrder({
+          order_number: order.orderNumber,
+          items: order.items,
+          subtotal: order.subtotal,
+          delivery_fee: order.deliveryFee,
+          tip: order.tip || 0,
+          discount: order.discount || 0,
+          total: order.total,
+          address: order.address,
+          name: order.name,
+          email: order.email,
+          status: order.status,
+          eta: order.eta,
+        }, token);
+      } catch {}
+    }
   };
 
   const loyaltyPoints = orders
@@ -62,7 +113,6 @@ export function OrdersProvider({ children }) {
     .reduce((sum, o) => sum + Math.floor(o.total * 10), 0);
 
   const clearOrders = () => {
-    // Clear any pending timers
     Object.values(timersRef.current).forEach((t) => {
       if (typeof t === "number") clearTimeout(t);
     });

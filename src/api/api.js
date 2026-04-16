@@ -117,4 +117,25 @@ const cancelBooking = async function (id, token) {
   return response.json();
 };
 
-export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, fetchMyBookings, cancelBooking, registerUser, loginUser, logoutUser };
+const postOrder = async function (order, token) {
+  const response = await fetch(`${API_BASE}/api/orders/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`,
+    },
+    body: JSON.stringify(order),
+  });
+  if (!response.ok) throw new Error('Failed to save order');
+  return response.json();
+};
+
+const fetchMyOrders = async function (token) {
+  const response = await fetch(`${API_BASE}/api/orders/mine/`, {
+    headers: { 'Authorization': `Token ${token}` },
+  });
+  if (!response.ok) throw new Error('Failed to fetch orders');
+  return response.json();
+};
+
+export { fetchAPI, fetchMenuItems, fetchFeaturedItems, submitAPI, fetchMyBookings, cancelBooking, postOrder, fetchMyOrders, registerUser, loginUser, logoutUser };

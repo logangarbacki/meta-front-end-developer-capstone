@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useOrders } from "../context/OrdersContext";
@@ -18,6 +18,14 @@ const ORDER_STATUS_COLORS = {
   on_the_way: { bg: "#e3f0ff", color: "#1a5faa", label: "On the Way" },
   delivered:  { bg: "#e6f4f1", color: "#1e7a5e", label: "Delivered" },
 };
+
+const REWARDS = [
+  { id: 1, pts: 50,  label: "Free Dessert",    desc: "Any dessert on us",          code: "DESSERT50"  },
+  { id: 2, pts: 100, label: "10% Off Order",   desc: "10% off your next delivery", code: "LOYAL100"   },
+  { id: 3, pts: 200, label: "Free Delivery",   desc: "No delivery fee next order", code: "SHIP200"    },
+  { id: 4, pts: 350, label: "20% Off Order",   desc: "20% off your next delivery", code: "LOYAL350"   },
+  { id: 5, pts: 500, label: "Free Meal",       desc: "One entrée on the house",    code: "MEAL500"    },
+];
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-US", {
@@ -42,6 +50,18 @@ function Bookings() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [cancellingId, setCancellingId] = useState(null);
+  const [claimedRewards, setClaimedRewards] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("ll_claimed_rewards")) || []; } catch { return []; }
+  });
+
+  const claimReward = useCallback((reward) => {
+    setClaimedRewards((prev) => {
+      const next = [...prev, reward.id];
+      localStorage.setItem("ll_claimed_rewards", JSON.stringify(next));
+      return next;
+    });
+    addToast(`Reward claimed! Use code ${reward.code} at checkout.`);
+  }, [addToast]);
 
   useEffect(() => { document.title = "My Account | Little Lemon"; }, []);
 
@@ -115,6 +135,13 @@ function Bookings() {
           Orders
           {orders.length > 0 && <span className="bookings-tab-badge">{orders.length}</span>}
         </button>
+        <button
+          className={`bookings-tab${tab === "rewards" ? " bookings-tab--active" : ""}`}
+          onClick={() => setTab("rewards")}
+        >
+          Rewards
+          {loyaltyPoints > 0 && <span className="bookings-tab-badge">{loyaltyPoints} pts</span>}
+        </button>
       </div>
 
       {/* ── Reservations tab ── */}
@@ -154,6 +181,43 @@ function Bookings() {
               </div>
             </section>
           )}
+        </div>
+      )}
+
+      {/* ── Rewards tab ── */}
+      {tab === "rewards" && (
+        <div className="bookings-tab-content">
+          <div className="rewards-header">
+            <div className="rewards-pts-display">
+              <span className="rewards-pts-number">{loyaltyPoints.toLocaleString()}</span>
+              <span className="rewards-pts-label">points available</span>
+            </div>
+            <p className="rewards-hint">Earn 10 pts per $1 spent on delivered orders. Claim rewards below.</p>
+          </div>
+          <div className="rewards-grid">
+            {REWARDS.map((reward) => {
+              const canClaim = loyaltyPoints >= reward.pts;
+              const claimed = claimedRewards.includes(reward.id);
+              return (
+                <div key={reward.id} className={`reward-card${!canClaim ? " reward-card--locked" : ""}${claimed ? " reward-card--claimed" : ""}`}>
+                  <div className="reward-card-pts">{reward.pts} pts</div>
+                  <h3 className="reward-card-title">{reward.label}</h3>
+                  <p className="reward-card-desc">{reward.desc}</p>
+                  {claimed ? (
+                    <div className="reward-code">Code: <strong>{reward.code}</strong></div>
+                  ) : (
+                    <button
+                      className="reward-claim-btn"
+                      disabled={!canClaim}
+                      onClick={() => claimReward(reward)}
+                    >
+                      {canClaim ? "Claim" : `Need ${reward.pts - loyaltyPoints} more pts`}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
