@@ -86,7 +86,7 @@ function Bookings() {
 
       {/* ── Reservations tab ── */}
       {tab === "reservations" && (
-        <>
+        <div className="bookings-tab-content">
           {loading && (
             <div className="bookings-loading">
               {[1,2,3].map(n => <div key={n} className="booking-skeleton" />)}
@@ -121,12 +121,12 @@ function Bookings() {
               </div>
             </section>
           )}
-        </>
+        </div>
       )}
 
       {/* ── Orders tab ── */}
       {tab === "orders" && (
-        <>
+        <div className="bookings-tab-content">
           {orders.length === 0 && (
             <div className="bookings-empty">
               <div className="bookings-empty-icon">🍋</div>
@@ -141,7 +141,7 @@ function Bookings() {
               {orders.map(order => <OrderCard key={order.id} order={order} />)}
             </div>
           )}
-        </>
+        </div>
       )}
     </main>
   );
@@ -169,6 +169,37 @@ function BookingCard({ booking, muted }) {
   );
 }
 
+const TRACKING_STEPS = [
+  { key: "preparing", label: "Preparing" },
+  { key: "on_the_way", label: "On the Way" },
+  { key: "delivered", label: "Delivered" },
+];
+
+function TrackingBar({ status }) {
+  const currentIndex = TRACKING_STEPS.findIndex((s) => s.key === status);
+  return (
+    <div className="tracking-bar">
+      {TRACKING_STEPS.map((step, i) => {
+        const done = i < currentIndex;
+        const active = i === currentIndex;
+        return (
+          <div key={step.key} className="tracking-step">
+            <div className={`tracking-node${done ? " tracking-node--done" : active ? " tracking-node--active" : ""}`}>
+              {done ? "✓" : i + 1}
+            </div>
+            <span className={`tracking-label${active ? " tracking-label--active" : done ? " tracking-label--done" : ""}`}>
+              {step.label}
+            </span>
+            {i < TRACKING_STEPS.length - 1 && (
+              <div className={`tracking-line${done ? " tracking-line--done" : ""}`} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function OrderCard({ order }) {
   const status = ORDER_STATUS_COLORS[order.status] || ORDER_STATUS_COLORS.preparing;
   return (
@@ -187,6 +218,7 @@ function OrderCard({ order }) {
             <span key={i} className="order-item-chip">{item.title} ×{item.qty}</span>
           ))}
         </div>
+        <TrackingBar status={order.status} />
       </div>
       <div className="order-card-right">
         <span className="booking-status" style={{ background: status.bg, color: status.color }}>

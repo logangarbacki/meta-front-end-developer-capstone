@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useOrders } from "../context/OrdersContext";
 import { useToast } from "../context/ToastContext";
+import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import "./Checkout.css";
 
@@ -12,10 +13,11 @@ function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
   const { addOrder } = useOrders();
   const { addToast } = useToast();
+  const { username } = useAuth();
   useEffect(() => { document.title = "Checkout | Little Lemon"; }, []);
 
   const [form, setForm] = useState({
-    name: "", email: "",
+    name: username || "", email: "",
     street: "", city: "", state: "", zip: "",
   });
   const [confirmed, setConfirmed] = useState(false);

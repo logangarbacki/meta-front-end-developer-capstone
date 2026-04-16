@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import greekSalad from "../assets/greek salad.jpg";
-import bruchetta from "../assets/bruchetta.svg";
 import lemonDessert from "../assets/lemon dessert.jpg";
 import restaurantFood from "../assets/restauranfood.jpg";
 import { fetchMenuItems } from "../api/api";
@@ -8,11 +7,11 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { useNavigate, Link } from "react-router-dom";
+import MenuItemModal from "../components/MenuItemModal";
 import "./Menu.css";
 
 const itemImages = {
   "Greek Salad": greekSalad,
-  "Bruschetta": bruchetta,
   "Lemon Dessert": lemonDessert,
 };
 
@@ -38,6 +37,7 @@ function Menu() {
   const [activeTab, setActiveTab] = useState("All");
   const [addedIds, setAddedIds] = useState({});
   const [search, setSearch] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => { document.title = "Menu | Little Lemon"; }, []);
 
@@ -77,7 +77,15 @@ function Menu() {
   const tabs = ["All", ...CATEGORY_ORDER.filter((c) => groupByCategory(items)[c])];
 
   const renderCard = (item) => (
-    <div className="menu-card" key={item.id}>
+    <div
+      className="menu-card"
+      key={item.id}
+      onClick={() => setSelectedItem(item)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setSelectedItem(item); }}
+      aria-label={`View details for ${item.title}`}
+    >
       <div className="menu-card-img">
         <img
           src={item.image_url || getImage(item.title)}
@@ -95,7 +103,7 @@ function Menu() {
         )}
         <button
           className={`add-to-cart-btn${addedIds[item.id] ? " add-to-cart-btn--added" : ""}`}
-          onClick={() => handleAddToCart(item)}
+          onClick={(e) => { e.stopPropagation(); handleAddToCart(item); }}
           disabled={!!addedIds[item.id]}
         >
           {addedIds[item.id] ? "✓ Added" : "Add to Cart"}
@@ -108,6 +116,14 @@ function Menu() {
   const visibleCategories = activeTab === "All" ? categories : categories.filter(c => c === activeTab);
 
   return (
+    <>
+    {selectedItem && (
+      <MenuItemModal
+        item={selectedItem}
+        fallbackImage={getImage(selectedItem.title)}
+        onClose={() => setSelectedItem(null)}
+      />
+    )}
     <main className="menu" aria-label="Menu of Little Lemon restaurant">
       <div className="menu-header">
         <h2>Our Menu</h2>
@@ -201,6 +217,7 @@ function Menu() {
         </div>
       )}
     </main>
+    </>
   );
 }
 
